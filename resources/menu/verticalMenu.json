@@ -1,0 +1,201 @@
+{
+  "menu": [
+    {
+      "url": "/portal",
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons bx bx-home-smile",
+      "slug": "dashboard"
+    },
+    {
+      "menuHeader": "Staff | Patients"
+    },
+    {
+      "name": "Accounts",
+      "icon": "menu-icon tf-icons bx bx-lock-open-alt",
+      "slug": "auth",
+      "submenu": [
+        {
+          "name": "All Users",
+          "slug": "all-users",
+          "url": "portal/all-users",
+          "allow":"admin"
+        },
+        {
+          "name": "Account Settings",
+          "slug": "pages-account-settings",
+          "url": "portal/pages/account-settings-account"
+        },
+        {
+          "name": "Change Password",
+          "slug": "change-password",
+          "url": "portal/password/update"
+        },
+        {
+          "url": "portal/register",
+          "name": "Register New Account",
+          "slug": "register",
+          "allow":"admin"
+        }
+      ]
+    },
+    {
+      "url": "portal/patient/history",
+      "name": "History",
+      "icon": "menu-icon tf-icons bx bx-history",
+      "slug": "auth",
+      "allow": "patient"
+    },
+    {
+      "name": "Patients",
+      "icon": "menu-icon tf-icons bx bx-user",
+      "slug": "patients",
+      "allow": "doctor",
+      "submenu": [
+        {
+          "url": "portal/patients",
+          "name": "All Patients",
+          "slug": "all-appointments",
+          "target": ""
+        },
+        {
+          "url": "portal/patients",
+          "name": "History",
+          "slug": "all-appointments",
+          "target": "",
+          "allow": "patient"
+        },
+        {
+          "url": "portal/patient/create",
+          "name": "Create a Patient",
+          "slug": "create-patient",
+          "target": ""
+        }
+      ]
+    },
+    {
+      "menuHeader": "Appointment | Examination",
+      "allow":"doctor"
+    },
+    {
+      "name": "All Appointments",
+      "icon": "menu-icon tf-icons bx bx-calendar",
+      "slug": "all-appointments",
+      "allow":"doctor",
+      "submenu": [
+        {
+          "url": "portal/appointments",
+          "name": "All Appointments",
+          "slug": "all-appointments",
+          "target": ""
+        },
+        {
+          "url": "portal/appointment/create",
+          "name": "Create an Appointment",
+          "slug": "create-appointment",
+          "target": ""
+        }
+      ]
+    },
+    {
+      "name": "Examinations",
+      "icon": "menu-icon tf-icons fa fa-tooth",
+      "slug": "all-appointments",
+      "allow":"doctor",
+      "submenu": [
+        {
+          "url": "portal/examinations",
+          "name": "Examinations",
+          "slug": "all-examinations",
+          "target": ""
+        }
+      ]
+    },
+    {
+      "menuHeader": "Payments | Salaries",
+      "allow":"doctor"
+    },
+    {
+      "url": "portal/payments",
+      "name": "All Payments",
+      "slug": "all-payments",
+      "icon": "menu-icon tf-icons bx bx-credit-card",
+      "allow":"admin"
+    },
+    {
+      "url": "portal/pending/payments/all",
+      "name": "Salaries",
+      "slug": "all-salaries",
+      "icon": "menu-icon tf-icons bx bx-wallet",
+      "allow":"doctor"
+    },
+    {
+      "menuHeader": "Fields | Settings",
+      "allow":"admin"
+    },
+    {
+      "name": "Services",
+      "icon": "menu-icon tf-icons bx bx-briefcase",
+      "slug": "cards-basic",
+      "allow":"admin",
+      "submenu": [
+        {
+          "url": "portal/services",
+          "name": "All Services",
+          "slug": "all-services",
+          "target": ""
+        },
+        {
+          "url": "portal/service/create",
+          "name": "Create a Service",
+          "slug": "create-service",
+          "target": ""
+        }
+      ]
+    },
+    {
+      "name": "Designations",
+      "icon": "menu-icon tf-icons bx bx-user-check",
+      "slug": "all-appointments",
+      "allow":"admin",
+      "submenu": [
+        {
+          "url": "portal/designations",
+          "name": "All Designations",
+          "slug": "all-appointments",
+          "target": ""
+        },
+        {
+          "url": "portal/designations/create",
+          "name": "Create a Designations",
+          "slug": "create-appointment",
+          "target": ""
+        }
+      ]
+    },
+    {
+      "url": "portal/timing/edit",
+      "name": "Change Timings",
+      "slug": "timing-edit",
+      "icon": "menu-icon tf-icons bx bx-time",
+      "target": "",
+      "allow":"admin"
+    },
+    {
+      "url": "portal/prescription/medicine",
+      "name": "Prescription Medicine",
+      "slug": "prescription-medicine",
+      "icon": "menu-icon tf-icons bx bx-first-aid",
+      "target": "",
+      "allow":"admin"
+    },
+    {
+      
+      "name": "",
+      "slug": "",
+      "icon": "",
+      "target": "",
+      "allow":""
+    }
+    
+  ]
+}
