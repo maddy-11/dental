@@ -13,7 +13,7 @@
     <div class="row" style="justify-content: space-between!important;">
       <!-- Total Patients Card -->
       <div class="col-12 col-md-6 col-xl-3 mb-3">
-        <div class="card text-white text-center" style="background:rgb(118 7 0)">
+        <div class="card text-white text-center" style="background:#a38cc6">
           <div class="card-body">
             <h6 class="card-title text-white">Total Patients</h6>
             <div class="d-flex align-items-center justify-content-center">
@@ -27,7 +27,7 @@
 
       <!-- Total Doctors Card -->
       <div class="col-12 col-md-6 col-xl-3 mb-3">
-        <div class="card text-white" style="background: rgb(0 126 203);">
+        <div class="card text-white" style="background: #dc3545">
           <div class="card-body">
             <h6 class="card-title text-white text-center">Total Doctors</h6>
             <div class="d-flex align-items-center justify-content-center">
@@ -41,7 +41,7 @@
 
       <!-- Total Appointments Card -->
       <div class="col-12 col-md-6 col-xl-3 mb-3">
-        <div class="card text-white" style="background:rgb(206 141 9)">
+        <div class="card text-white" style="background:#f4a500">
           <div class="card-body">
             <h6 class="card-title text-white text-center">Total Appointments</h6>
             <div class="d-flex align-items-center justify-content-center">
@@ -72,7 +72,7 @@
   @endif
   <div class="card">
     <div class="d-flex align-items-center justify-content-between">
-    <h5 class="card-header">Appointments</h5>
+    <h5 class="card-header">Active Appointments</h5>
     @if(Auth::user()->status == 'Doctor' || Auth::user()->is_admin == true)
     <a href="{{ route('appointments.create') }}" class="btn btn-primary me-2">Add New</a>
     @endif
@@ -136,7 +136,7 @@
   <div class="mt-5 card">
     <ul class="nav nav-tabs" id="tabSection1" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="home-tab1" data-bs-toggle="tab" href="#home1" role="tab" aria-controls="home" aria-selected="true">All Users</a>
+        <a class="nav-link active" id="home-tab1" data-bs-toggle="tab" href="#home1" role="tab" aria-controls="home" aria-selected="true">All Staff</a>
       </li>
       <li class="nav-item" role="presentation">
         <a class="nav-link" id="profile-tab1" data-bs-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-selected="false">Doctors</a>

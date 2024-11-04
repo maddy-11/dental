@@ -12,19 +12,25 @@
 
   <form action="{{ route('appointments.store') }}" method="post" role="form" class="php-email-form">
     @csrf
-    <div class="row">
-      <div class="col-md-6 form-group">
+    <div class="row justify-content-center">
+      <div class="col-md-5 form-group">
         <select id="patient" name="patient_id" class="form-select" required="">
           <option selected disabled>Select Patient</option>
           @foreach($patients as $patient)
-          <option data-phone="{{ $patient->phone }}" value="{{ $patient->id }}">#{{ $patient->registration_id }} - {{ $patient->name }}</option>
+          <option data-phone="{{ $patient->phone }}" value="{{ $patient->id }}">
+            #{{ $patient->registration_id }} - {{ $patient->name }}
+          </option>
           @endforeach
         </select>
+      </div>
+      <div class="col-md-1 d-flex justify-content-end align-items-center">
+        <button type="button" class="btn btn-primary">+</button>
       </div>
       <div class="col-md-6 form-group mt-3 mt-md-0">
         <input type="tel" class="form-control bg-light" name="phone" id="phone" placeholder="Patient's Phone" required="" readonly>
       </div>
     </div>
+
     <div class="row">
       <div class="col-md-3 form-group mt-3">
         <input type="text" name="date" class="form-control datepicker" id="date" placeholder="Pick a Date" required>
@@ -35,16 +41,21 @@
         </select>
       </div>
 
-      <div class="col-md-3 form-group mt-3">
-        <select name="service_id" id="service" class="form-select" required="">
-          <option selected disabled>Select Service</option>
-          @foreach($services as $service)
-          <option value="{{ $service->id }}">{{ $service->name }}</option>
-          @endforeach
-        </select>
+      <div class="col-md-4 form-group mt-3 row border-end border-end-3 border-primary">
+        <div class="col-md-10">
+          <select name="service_id" id="service" class="form-select" required="">
+            <option selected disabled>Select Service</option>
+            @foreach($services as $service)
+            <option value="{{ $service->id }}">{{ $service->name }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-primary px-5">+</button>
+        </div>
       </div>
 
-      <div class="col-md-3 form-group mt-3">
+      <div class="col-md-2 form-group mt-3 ms-5">
         <select name="user_id" id="doctor" class="form-select" required="">
           <option selected disabled>Select Doctor</option>
           @foreach($doctors as $doctor)
@@ -68,10 +79,10 @@
 @push('page-scripts')
 <script>
   jQuery(document).ready(function($) {
-  $('#patient').select2({
-            width: '100%',
-        });
-});
+    $('#patient').select2({
+      width: '100%',
+    });
+  });
   document.addEventListener('DOMContentLoaded', () => {
     const timeSelect = document.getElementById('time');
     let start_time = '{{ $timings->start_time }}';

@@ -17,6 +17,7 @@ use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\PaidSalaryController;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\ClinicTimingController;
+use App\Http\Controllers\InvoiceController;
 
 
 Route::get('/', [HomeView::class, 'index'])->name('dashboard-analytics');
@@ -53,7 +54,7 @@ Route::prefix('portal')
 	Route::post('patient/register', [RegisterBasic::class, 'patient_register'])->name('patient.register');
 	Route::get('patients/edit/{id}', [AccountSettingsAccount::class, 'patient_edit'])->name('patient.edit');
 	Route::post('patient/update/{id}', [AccountSettingsAccount::class, 'patient_update'])->name('patient.update');
-	Route::get('patients/delete/{id}', [AccountSettingsAccount::class, 'patient_destroy'])->name('patient.delete');
+	Route::get('patients/delete/{id}', [AccountSettingsAccount::class, 'destroy'])->name('patient.delete');
 
 // routes/web.php
 	Route::get('/password/update', [ChangePassowrd::class, 'index'])->name('password.edit');
@@ -106,10 +107,14 @@ Route::prefix('portal')
 	Route::get('/examination/delete/{id}', [ExaminationController::class, 'destroy'])->name('examination.delete');
 
 	// Payments
-	Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
-	Route::get('/payments/fetch', [PaymentController::class, 'fetch'])->name('payments.fetch');
-	Route::get('/view-receipt', [PaymentController::class, 'index'])->name('payments.receipt');
-	Route::get('/payments/delete/{id}', [PaymentController::class, 'destroy'])->name('payments.delete');
+	Route::get('/payments', [InvoiceController::class, 'index'])->name('payments.index');
+	Route::get('/payments/fetch', [InvoiceController::class, 'fetch'])->name('payments.fetch');
+	Route::get('/view-receipt', [InvoiceController::class, 'index'])->name('payments.receipt');
+	Route::get('/payments/delete/{id}', [InvoiceController::class, 'destroy'])->name('payments.delete');
+
+	// Payments Details
+	Route::get('/payments/details/{id}', [PaymentController::class, 'index'])->name('payments.details.index');
+	Route::get('/payments/details/delete/{id}', [PaymentController::class, 'destroy'])->name('payments.details.delete');
 
 	// PendingPayments
 	Route::get('/pending/payments/all', [PendingPaymentController::class, 'index'])->name('pending_payments.index');
@@ -128,13 +133,14 @@ Route::prefix('portal')
 	Route::get('/prescription/medicine', [PrescriptionMedicineController::class, 'prescription_medicine'])->name('prescription.medicine.index');
 	Route::get('/prescription/medicine/add', [PrescriptionMedicineController::class, 'prescription_medicine_create'])->name('prescription.medicine.create');
 	Route::post('/prescription/medicine/add', [PrescriptionMedicineController::class, 'prescription_medicine_store'])->name('prescription.medicine.store');
-	Route::get('/prescription/medicine/edit', [PrescriptionMedicineController::class, 'prescription_medicine_edit'])->name('prescription.medicine.edit');
-	Route::post('/prescription/medicine/update', [PrescriptionMedicineController::class, 'prescription_medicine_update'])->name('prescription.medicine.update');
+	Route::get('/prescription/medicine/edit/{id}', [PrescriptionMedicineController::class, 'prescription_medicine_edit'])->name('prescription.medicine.edit');
+	Route::post('/prescription/medicine/update/{id}', [PrescriptionMedicineController::class, 'prescription_medicine_update'])->name('prescription.medicine.update');
 	Route::get('/prescription/medicine/delete/{id}', [PrescriptionMedicineController::class, 'destroy'])->name('prescription.medicine.delete');
 
 
 	// Prescription
 	Route::get('/prescription/', [PrescriptionController::class, 'index'])->name('prescription.index');
+	Route::get('/prescription/download/{id}', [PrescriptionController::class, 'downloadPDF'])->name('prescription.download');
 	Route::get('/prescription/create/{id}', [PrescriptionController::class, 'create'])->name('prescription.create');
 	Route::post('/prescription/store', [PrescriptionController::class, 'store'])->name('prescription.store');
 	Route::get('/prescription/edit/{id}', [PrescriptionController::class, 'edit'])->name('prescription.edit');

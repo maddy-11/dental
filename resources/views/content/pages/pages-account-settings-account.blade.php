@@ -39,6 +39,7 @@
                     <input type="text" class="form-control" id="email" name="email" value = "{{ $user->email }}" placeholder="Enter your email">
                   </div>
 
+                  @if($user->status != 'Patient')
                   @if($user->is_admin != true)
                   <div class="mb-6 col-md-6">
                     <p class="form-label">Salary Type</p>
@@ -57,6 +58,7 @@
                       <span class="input-group-text d-none per">%</span>
                     </div>
                   </div>
+                  @endif
                   @endif
                   <div class="mb-6 col-md-6">
                     <label for="email" class="form-label">Select Status</label>

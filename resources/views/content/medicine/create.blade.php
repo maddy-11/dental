@@ -23,6 +23,13 @@
           </div>
 
           <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Dosage</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="medicine" id="name" placeholder="500 mg" />
+            </div>
+          </div>
+
+          <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-name">Description</label>
             <div class="col-sm-10">
               <textarea  class="form-control" name="description" id="desciption" placeholder="Description"></textarea>

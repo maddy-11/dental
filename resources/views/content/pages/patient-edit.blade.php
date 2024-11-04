@@ -1,6 +1,6 @@
-@extends('layouts/blankLayout')
+@extends('layouts/contentNavbarLayout')
 
-@section('title', 'Register')
+@section('title', 'Edit Patient')
 @section('nav-title', 'Patients')
 
 @section('page-style')
@@ -12,8 +12,8 @@
 
   @section('content')
   <div class="container-xxl">
-    <div class="authentication-wrapper authentication-basic container-p-y">
-      <div class="container col-md-10">
+    <div>
+      <div class="container">
         <!-- Register Card -->
         <div class="card px-sm-6 px-0">
           <div class="card-body">
@@ -24,8 +24,6 @@
                 <span class="app-brand-text demo text-heading fw-bold">{{config('variables.templateName')}}</span>
               </a>
             </div>
-            <!-- /Logo -->
-            <p class="mb-6 text-center">Add Patient!</p>
 
             <form class="mb-6 row align-items-center" action="{{ route('patient.update', ['id' => $patient->id]) }}" method="POST">
               @csrf

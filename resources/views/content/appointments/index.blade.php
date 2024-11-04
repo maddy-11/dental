@@ -24,6 +24,7 @@
           <th>Time</th>
           <th>Phone</th>
           <th>Examination</th>
+          {{-- <th>Prescription</th> --}}
           <th>Actions</th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
           <td>{{ \Carbon\Carbon::parse($appointment->start_date_time)->format('l, F j, Y g:i A') }}</td>
           <td>{{ $appointment->phone }}</td>
           <td><a href="{{ route('examination.create', ['id'=>$appointment->id]) }}" class="btn btn-primary">Examination</a></td>
+          {{-- <td><a href="{{ route('prescription.create', ['id'=>$appointment->id]) }}" class="btn btn-primary">Prescription</a></td> --}}
           <td class="text-center">
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>

@@ -18,11 +18,11 @@ class Prescription extends Model
 
     public function appointment()
     {
-        return $this->belongsTo(Appointment::class, 'user_id');
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
     public function medicine()
     {
-        return $this->belongsTo(PrescriptionMedicine::class, 'patient_id');
+        return $this->belongsTo(PrescriptionMedicine::class, 'medicine_id');
     }
 }

@@ -1,5 +1,4 @@
 @extends('layouts/contentNavbarLayout')
-
 @section('title', 'Pending Payments')
 @section('nav-title', 'Pending Payments')
 
@@ -24,7 +23,6 @@
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
-}
 </style>
 <div class="card">
   <div class="d-flex justify-content-between align-items-center pe-3">

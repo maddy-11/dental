@@ -29,7 +29,7 @@ class LoginBasic extends Controller
         return redirect()->route('dashboard-analytics');
     }
     // Authentication failed...
-    return redirect()->back()->withErrors(['message' => 'Invalid credentials']);
+    return back()->with('error', 'Invalid credentials');
 }
 public function logout(Request $request)
 {

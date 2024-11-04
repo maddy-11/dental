@@ -4,130 +4,66 @@
 @section('nav-title', 'Payments')
 
 @section('content')
-<style type="text/css">
-  td, th{
-    text-align:center;
-}
-</style>
-<!-- Bootstrap Table with Header - Dark -->
 <div class="card">
-    <div class="d-flex justify-content-between align-items-center pe-3">
-        <h4 class="p-2 m-0">All Payments</h4>
+  {{-- <div class="d-flex justify-content-between align-items-center pe-3">
+    <label>Patient</label><input type="text" readonly value="{{ $patient }}">
+    <label>Appointment Date</label><input type="text" readonly value="{{ \Carbon\Carbon::parse($date)->format('l, F j, Y g:i A') }}">
+  </div> --}}
+  <div class="d-flex flex-column flex-md-row align-items-center gap-3 p-5 mt-md-0">
+        <div class="row align-items-center container">
+            <label class="col-md-3 col-4 text-nowrap mb-1 mb-sm-0 me-sm-2">Patient</label>
+            <input class="col-md-5 col text-center justify-content-between p-2 bg-light border rounded" value="{{ $patient }}" readonly>
+        </div>
+        <div class="row align-items-center justify-content-between container">
+            <label class="col-md-5 col-4 text-nowrap mb-1 mb-sm-0 me-sm-2">Appointment Date</label>
+            <input class="col-md col text-center p-2 bg-light border rounded" value="{{ \Carbon\Carbon::parse($date)->format('l, F j, Y g:i A') }}" readonly>
+        </div>
+        <div class="row align-items-center justify-content-between container">
+            <label class="col-md-4 col-4 text-nowrap mb-1 mb-sm-0 me-sm-2">Total Amount</label>
+            <input class="col-md col text-center p-2 bg-light border rounded" value="{{ $total }}" readonly>
+        </div>
     </div>
-
-    <!-- Date Range Picker -->
-    <div class="d-flex justify-content-between align-items-center p-3" style="background: ghostwhite;">
-        <div class="col-md-4">
-            <input type="text" id="dateRangePicker" class="form-control bg-light text-dark" placeholder="Select Date Range">
-      </div>
-      <button class="btn btn-primary" id="filterBtn">Filter</button>
-  </div>
-
 
   <div class="table-responsive text-nowrap px-5">
     <table class="table datatable" id="paymentsTable">
-        <thead class="table-dark">
-            <tr>
-                <th>Patient</th>
-                <th class="text-center">Doctor</th>
-                <th>Service</th>
-                <th>Appointment Date</th>
-                <th>Amount</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-            <!-- Data will be populated by AJAX -->
-        </tbody>
+      <thead class="table-dark">
+        <tr>
+          <th>Doctor</th>
+          <th>Service</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        @foreach($payments as $payment)
+        <tr>
+        <td>{{ $payment->examination->appointment->user->name }}</td>
+        <td>{{ $payment->examination->service->name }}</td>
+        <td>
+        <span class="bg-success rounded text-white btn btnSuccess">{{ $payment->amount }}</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{{ route('payments.details.delete', ['id' => $payment->id]) }}"><i class="bx bx-trash me-1"></i> Delete</a>
+            </div>
+        </td>
+    </tr>
+        @endforeach
+      </tbody>
     </table>
-</div>
+  </div>
 </div>
 
 <style>
-    .btnSuccess {
-        background: #3aa700!important;
-    }
+.btnSuccess {
+    background: #184301 !important;
+}
+td, th{
+    text-align:center !important;
+}
+
 </style>
 
 @endsection
-
-@push('page-scripts')
-<script>
-    jQuery(document).ready(function($) {
-        var table = $('#paymentsTable').DataTable();
-        
-        // Date range picker initialization
-        var start = moment().startOf('month');
-        var end = moment();
-
-        function cb(start, end) {
-            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        }
-
-        $('#dateRangePicker').daterangepicker({
-            startDate: start,
-            endDate: end,
-            ranges: {
-             'Today': [moment(), moment()],
-             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-             'This Month': [moment().startOf('month'), moment()],
-             'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-         }
-     }, cb);
-
-        // Set initial date range display
-        cb(start, end);
-
-        // Event listener for filter button
-        $('#filterBtn').on('click', function() {
-            let dateRange = $('#dateRangePicker').val().split(' - ');
-            let startDate = dateRange[0];
-            let endDate = dateRange[1];
-
-            fetchPayments(startDate, endDate);
-        });
-
-        // Initial fetch call with default dates
-        fetchPayments(start.format('MM/DD/YYYY'), end.format('MM/DD/YYYY'));
-
-        // Function to fetch payments
-        function fetchPayments(startDate, endDate) {
-            $.ajax({
-                url: '{{ route("payments.fetch") }}', // Define your route here
-                method: 'GET',
-                data: {
-                    start_date: startDate,
-                    end_date: endDate
-                },
-                success: function(data) {
-                  console.log(data);
-                  table.clear().draw();
-                  $.each(data, function(index, payment) {
-                    table.row.add([
-                        payment.examination.appointment.name,
-                        payment.examination.doctor.name,
-                        payment.examination.service.name,
-                        payment.examination.appointment.start_date_time,
-                        '<span class="bg-success rounded text-white btn btnSuccess">' + payment.amount + '</span>',
-                        '<div class="dropdown">' +
-                        '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
-                        '<i class="bx bx-dots-vertical-rounded"></i></button>' +
-                        '<div class="dropdown-menu">' +
-                            // '<a class="dropdown-item" href="{{ url('payments/receipt') }}/' + payment.id + '"><i class="bx bx-edit-alt me-1"></i> View Receipt</a>' +
-                        '<a class="dropdown-item" href="{{ url('payments/delete') }}/' + payment.id + '"><i class="bx bx-trash me-1"></i> Delete</a>' +
-                        '</div></div>'
-                        ]).draw();
-                });
-              },
-              error: function(xhr, status, error) {
-                console.error(xhr);
-                alert('An error occurred while fetching payments.');
-            }
-        });
-        }
-    });
-</script>
-
-@endpush

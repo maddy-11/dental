@@ -4,29 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Models\Invoice;
 use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $payments = Payment::all();
-        return view('content.payments.index', compact('payments'));
+        $payments = Payment::where('invoice_id', $id)->get();
+        $patient = $payments[0]->examination->patient->name;
+        $date = $payments[0]->examination->appointment->start_date_time;
+        $total = $payments->sum('amount');
+        return view('content.payments.index', compact('payments', 'patient', 'date', 'total'));
     }
 
-    public function fetch(Request $request)
-{
-    $startDate = $request->input('start_date');
-    $endDate = $request->input('end_date');
-
-    if ($startDate && $endDate) {
-            $startDate = Carbon::createFromFormat('m/d/Y', $startDate)->startOfDay();
-            $endDate = Carbon::createFromFormat('m/d/Y', $endDate)->endOfDay();
-        }
-
-    $payments = Payment::with('examination.appointment', 'examination.doctor', 'examination.service')->whereBetween('created_at', [$startDate, $endDate])
-    ->get();
-
-    return response()->json($payments);
-}
 }

@@ -31,11 +31,15 @@ class AccountSettingsAccount extends Controller
   }
 
   public function destroy($id)
-  {
-    $appointment = User::findOrFail($id);
-    $appointment->delete();
-    return redirect()->route('dashboard-analytics')->with('success', 'Account deleted successfully.');
-  }
+{
+    $user = User::findOrFail($id);
+    if (\Auth::user()->is_admin) {
+        $user->delete();
+        return redirect()->route('dashboard-analytics')->with('success', 'Account deleted successfully.');
+    }
+    return back()->with('error', 'Only Admin can Delete.');
+}
+
 
   public function edit(Request $request, $id)
   {
@@ -86,6 +90,6 @@ class AccountSettingsAccount extends Controller
     $user->fill($data);
     $user->save();
 
-    return redirect()->route('patient.index')->with('success', 'User updated successfully.');
+    return back()->with('success', 'Patient updated successfully.');
   }
 }

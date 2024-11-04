@@ -16,18 +16,18 @@ class Analytics extends Controller
     $doctors = User::where('status', 'Doctor')->get();
     if (\Auth::user()->is_admin){
     $patients = User::where('status','Patient')->get();
-    $appointments = Appointment::where('status',true)->orderBy('created_at', 'desc')->get();
+    $appointments = Appointment::where('status',true)->where('start_date_time','>=',now())->orderBy('created_at', 'desc')->get();
     $services = Service::all();
     $users = User::where('status', '!=','Patient')->get();
   }
   else if(\Auth::user()->status =='Patient'){
-    $appointments = Appointment::where('status',true)->where('patient_id', \Auth::user()->id)->orderBy('created_at', 'desc')->get();
+    $appointments = Appointment::where('status',true)->where('patient_id', \Auth::user()->id)->where('start_date_time','>=',now())->orderBy('created_at', 'desc')->get();
     return view('content.dashboard.dashboards-analytics', compact('appointments'));
   }
   else if(\Auth::user()->status =='Doctor'){
     $users = User::all();
     $services = Service::all();
-    $appointments = Appointment::where('status',true)->where('user_id', \Auth::user()->id)->orderBy('created_at', 'desc')->get();
+    $appointments = Appointment::where('status',true)->where('user_id', \Auth::user()->id)->where('start_date_time','>=',now())->orderBy('created_at', 'desc')->get();
     $patients = User::where('doctor', \Auth::user()->name)->get();
   }
     $total_patients = User::where('status','Patient')->count();

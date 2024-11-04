@@ -9,7 +9,10 @@
     }
 </style>
 <div class="container card p-5">
-    <h3>Create Prescription</h3>
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>Create Prescription</h3>
+    </div>
+    <hr>
     <div class="d-flex justify-content-around align-items-center mb-3">
         <label>Appointment For</label/>
         <input class="text-center p-2 border rounded" value="{{ $appointment->name }}" readonly>
@@ -36,11 +39,11 @@
                             <select class="form-control select2" name="medicine[]">
                                 <option selected disabled>Select Medicine</option>
                                 @foreach($medicine as $m)
-                                <option value="{{ $m->id }}">{{ $m->medicine }}</option>
+                                <option value="{{ $m->id }}">{{ $m->medicine }}- {{ $m->dosage }}</option>
                                 @endforeach
                             </select>
                         </td>
-                        <td><input type="number" class="form-control" name="duration[]" placeholder="Duration"></td>
+                        <td><input type="number" class="form-control" name="duration[]" placeholder="10"></td>
                         <td>
                             <select class="form-control form-select" name="time_unit[]">
                                 <option value="days">Days</option>
@@ -52,6 +55,7 @@
                                 <option selected disabled>Select</option>
                                 <option value="days">1 Time a Day</option>
                                 <option value="weeks">2 Times a Day</option>
+                                <option value="weeks">3 Times a Day</option>
                             </select>
                         </td>
                         <td class="d-flex">
@@ -62,7 +66,7 @@
                 </tbody>
             </table>
         </div>
-        <input type="submit" value="Save" class="btn btn-primary form-control">
+        <input type="submit" value="Save and Preview" class="btn btn-primary form-control">
     </form>
 </div>
 @endsection
@@ -101,6 +105,7 @@
             <option selected disabled>Select</option>
             <option value="days">1 Time a Day</option>
             <option value="weeks">2 Times a Day</option>
+            <option value="weeks">3 Times a Day</option>
             </select></td>
             <td>
             <button type="button" class="btn btn-primary add-row me-2">+</button>

@@ -26,12 +26,15 @@ class PrescriptionMedicineController extends Controller
 
     public function prescription_medicine_edit($id)
     {
-        dd('here');
+        $medicine = PrescriptionMedicine::findOrFail($id);
+        return view('content.medicine.edit', compact('medicine'));
     }
 
-    public function prescription_medicine_update()
+    public function prescription_medicine_update(Request $request, $id)
     {
-        dd('here');
+        $medicine = PrescriptionMedicine::findOrFail($id);
+        $medicine->update($request->all());
+        return back()->with('success', 'Medicine Updated Successfully');
     }
 
     public function destroy($id)

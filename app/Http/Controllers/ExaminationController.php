@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Service;
 use App\Models\Payment;
 use App\Models\PendingPayment;
+use App\Models\Invoice;
 
 class ExaminationController extends Controller
 {
@@ -41,11 +42,16 @@ class ExaminationController extends Controller
             'doctor_id' => 'required|int',
             'service_id' => 'required|int',
         ]);
+        $invoice = Invoice::where('appointment_id', $request->appointment_id)->first();
+        if(!$invoice){
+            $invoice = Invoice::create(['appointment_id'=>$request->appointment_id]);
+        }
         $appointment = Appointment::findOrFail($request->appointment_id);
         $e = Examination::create($request->all());
         
         $payment['amount'] = $request->price;
         $payment['examination_id'] = $e->id;
+        $payment['invoice_id'] = $invoice->id;
         Payment::create($payment);
         if($e->doctor->salaryType == 'percentage'){
             $amount = $e->doctor->salary/100 * $request->price;

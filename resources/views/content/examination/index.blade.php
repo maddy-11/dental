@@ -27,7 +27,7 @@
                             <td>{{ $appointment->user->name }}</td>    
                             <td>{{ \Carbon\Carbon::parse($appointment->start_date_time)->format('D, F j, Y g:i A') }}</td>
                             <td><button class="btn btn-primary historyModalBtn" data-patient_id="{{ $appointment->patient_id }}">History</button></td>
-                            <td><button class="btn btn-primary historyModalBtn">Prescription</button></td>
+                            <td><a href="{{ route('prescription.create', ['id' => $appointment->id]) }}" class="btn btn-primary">Prescription</a></td>
                         </tr>
                     </tbody>
                 </table>
