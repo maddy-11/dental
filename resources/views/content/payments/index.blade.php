@@ -9,13 +9,13 @@
     <label>Patient</label><input type="text" readonly value="{{ $patient }}">
     <label>Appointment Date</label><input type="text" readonly value="{{ \Carbon\Carbon::parse($date)->format('l, F j, Y g:i A') }}">
   </div> --}}
-  <div class="d-flex flex-column flex-md-row align-items-center gap-3 p-5 mt-md-0">
+  <div class="d-flex flex-column flex-md-row align-items-center gap-3 p-5 mt-md-0" style="background: ghostwhite;">
         <div class="row align-items-center container">
             <label class="col-md-3 col-4 text-nowrap mb-1 mb-sm-0 me-sm-2">Patient</label>
             <input class="col-md-5 col text-center justify-content-between p-2 bg-light border rounded" value="{{ $patient }}" readonly>
         </div>
         <div class="row align-items-center justify-content-between container">
-            <label class="col-md-5 col-4 text-nowrap mb-1 mb-sm-0 me-sm-2">Appointment Date</label>
+            <label class="col-md-3 col-4 text-nowrap mb-1 mb-sm-0 me-sm-2">Date</label>
             <input class="col-md col text-center p-2 bg-light border rounded" value="{{ \Carbon\Carbon::parse($date)->format('l, F j, Y g:i A') }}" readonly>
         </div>
         <div class="row align-items-center justify-content-between container">

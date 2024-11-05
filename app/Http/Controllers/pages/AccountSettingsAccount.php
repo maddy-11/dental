@@ -31,14 +31,14 @@ class AccountSettingsAccount extends Controller
   }
 
   public function destroy($id)
-{
+  {
     $user = User::findOrFail($id);
     if (\Auth::user()->is_admin) {
-        $user->delete();
-        return redirect()->route('dashboard-analytics')->with('success', 'Account deleted successfully.');
+      $user->delete();
+      return redirect()->route('dashboard-analytics')->with('success', 'Account deleted successfully.');
     }
     return back()->with('error', 'Only Admin can Delete.');
-}
+  }
 
 
   public function edit(Request $request, $id)
@@ -61,8 +61,13 @@ class AccountSettingsAccount extends Controller
   }
   public function patient_index()
   {
-    $patients = User::where('status','Patient')->get();
-    return view('content.pages.patients', compact('patients'));
+    if(\Auth::user()->is_admin || \Auth::user()->status == 'Doctor'){
+      $patients = User::where('status','Patient')->get();
+      return view('content.pages.patients', compact('patients'));
+    }
+    else{
+      return redirect()->route('dashboard-analytics')->with('error', 'Not Allowed');
+    }
   }
 
   public function patient_history()

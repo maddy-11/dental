@@ -19,7 +19,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Email</th>
+                  <th>Username</th>
                   <th>Status</th>
                   <th>Salary</th>
                   <th>Phone</th>
@@ -31,7 +31,7 @@
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td> <span>{{ $user->name }}</span></td>
-                  <td> <span>{{ $user->email }}</span></td>
+                  <td> <span>{{ $user->username }}</span></td>
                   <td><span class="badge bg-label-primary me-1">{{ $user->status }}</span></td>
                   <td> <span>{{ $user->salary ?? 'No Salary' }}</span><span class="@if($user->salaryType != 'percentage') d-none @endif">%</span> </td>
                   <td> <span>{{ $user->phone }}</span></td>

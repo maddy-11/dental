@@ -21,9 +21,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-  <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles">
+  <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet"/>
   <!-- Include Styles -->
   @include('layouts/sections/styles')
 
@@ -46,6 +46,31 @@
   .dt-layout-row{
     display:flex!important;
   }
+  .select2-container .select2-selection--single {
+    height: calc(2.25rem + 2px);
+    line-height: 2.25rem;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 2.25rem;
+}
+.select2-container .select2-selection--single .select2-selection__arrow {
+    height: calc(2.25rem + 2px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    line-height: 2.25rem;
+}
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    height: 2.25rem;
+    line-height: 2.25rem;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    margin-top: -1px;
+}
+.swal2-container.swal2-center.swal2-backdrop-show {
+    z-index: 100000;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

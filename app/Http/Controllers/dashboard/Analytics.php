@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\Appointment;
 use App\Models\Payment;
 use App\Models\User;
+use Carbon\Carbon;
 
 class Analytics extends Controller
 {
@@ -32,9 +33,37 @@ class Analytics extends Controller
   }
     $total_patients = User::where('status','Patient')->count();
     $total_doctors = User::where('status', 'Doctor')->count();
-    $total_appointments = Appointment::count();
+    $total_appointments = Appointment::where('created_at', '>=', Carbon::now()->subDays(30))->count();
     $total_payments = Payment::sum('amount');
     return view('content.dashboard.dashboards-analytics', compact('services','appointments', 'users', 'doctors', 'patients', 'total_patients', 'total_doctors', 'total_appointments', 'total_payments'));
   }
+
+  public function getAppointmentsLast30Days()
+    {
+        // Get the last 30 days
+        $dates = [];
+        for ($i = 0; $i < 30; $i++) {
+            $dates[] = \Carbon\Carbon::today()->subDays($i)->toDateString();
+        }
+
+        // Fetch appointments grouped by date
+        $appointments = Appointment::selectRaw('DATE(start_date_time) as date, COUNT(*) as count') // Update here
+            ->whereIn(\DB::raw('DATE(start_date_time)'), $dates)
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->keyBy('date')
+            ->map(function ($item) {
+                return $item->count;
+            });
+
+        // Create an array for the response
+        $data = [];
+        foreach ($dates as $date) {
+            $data[$date] = $appointments->get($date, 0);
+        }
+
+        return response()->json($data);
+    }
 
 }

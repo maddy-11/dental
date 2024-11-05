@@ -93,7 +93,7 @@
                         </button>
                     </div>
                     <div class="modal-body table-responsive">
-                        <table id="#historyTable" class="table datatable">
+                        <table id="#historyTable" class="table">
                             <thead>
                                 <th>Patient</th>
                                 <th>Doctor</th>
@@ -137,7 +137,6 @@
                             '<td>' + examination.price + '</td>' +
                             '</tr>';
                             tbody.append(row);
-                            console.log(row)
                         });
                     },
                     error: function(xhr, status, error) {

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Dental Clinic</title>
+  <title>{{ $brandName }}</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -17,22 +17,22 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
 
-<!-- Google Fonts Stylesheet -->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Google Fonts Stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<!-- Vendor CSS Files -->
-<link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <!-- Vendor CSS Files -->
+  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
 
-<!-- Main CSS File -->
-<link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+  <!-- Main CSS File -->
+  <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: Medilab
@@ -104,8 +104,8 @@
       <div class="container position-relative">
 
         <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
-          <h2>WELCOME TO Dental Clinic</h2>
-          <p>We are team of talented designers making websites with Bootstrap</p>
+          <h2 class="mb-5">WELCOME TO {{ $brandName }}</h2>
+          <p>We are team of talented dentists to take care of your Teeth</p>
         </div><!-- End Welcome -->
 
         <div class="content row gy-4">
@@ -121,7 +121,7 @@
             </div>
           </div><!-- End Why Box -->
 
-      </div>
+        </div>
 
     </section><!-- /Hero Section -->
 
@@ -222,613 +222,612 @@
 
       <div class="container">
 
-       @php
-       $totalServices = count($services);
-       @endphp
-
-       <div class="row gy-4">
-        @foreach($services as $index => $service)
         @php
-        $colClass = 'col-lg-4 col-md-6'; // Default class
-        // If the service is the last in a row, adjust the class
-        if ($totalServices % 3 == 1 && $index == $totalServices - 1) {
+        $totalServices = count($services);
+        @endphp
+
+        <div class="row gy-4">
+          @foreach($services as $index => $service)
+          @php
+          $colClass = 'col-lg-4 col-md-6'; // Default class
+          // If the service is the last in a row, adjust the class
+          if ($totalServices % 3 == 1 && $index == $totalServices - 1) {
           // Last item and total items leave a remainder of 1 when divided by 3
           $colClass = 'col-lg-12';
-        } elseif ($totalServices % 3 == 2 && ($index == $totalServices - 2 || $index == $totalServices - 1)) {
+          } elseif ($totalServices % 3 == 2 && ($index == $totalServices - 2 || $index == $totalServices - 1)) {
           // Last two items and total items leave a remainder of 2 when divided by 3
           $colClass = 'col-lg-6 col-md-6';
-        }
-        @endphp
+          }
+          @endphp
 
-        <div class="{{ $colClass }}" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-item position-relative">
-            <div class="icon">
-              <i class="fas fa-heartbeat"></i>
-            </div>
-            <a href="#" class="stretched-link">
+          <div class="{{ $colClass }}" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <a href="#" class="stretched-link">
               <h3>{{ $service->name }}</h3>
             </a>
-            <p>{{ $service->description }}</p>
-            <p class="mt-3"><strong>Fee: {{ $service->price }}</strong></p>
+              <p>{{ $service->description }}</p>
+              <p class="mt-3"><strong>Fee: {{ $service->price }}</strong></p>
+            </div>
           </div>
+          @endforeach
         </div>
-        @endforeach
+
+
       </div>
 
+    </section><!-- /Services Section -->
 
-    </div>
+    <!-- Appointment Section -->
+    <section id="appointment" class="appointment section">
 
-  </section><!-- /Services Section -->
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Appointment</h2>
+        <p>Pick an Appointment For You in the available Time Slot</p>
+      </div><!-- End Section Title -->
 
-  <!-- Appointment Section -->
-  <section id="appointment" class="appointment section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Appointment</h2>
-      <p>Pick an Appointment For You in the available Time Slot</p>
-    </div><!-- End Section Title -->
-
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-      <form action="{{ route('appointments.store.front') }}" method="post" role="form" class="php-email-form">
-        @csrf
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
+        <form action="{{ route('appointments.store.front') }}" method="post" role="form" class="php-email-form">
+          @csrf
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+              <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" required="">
+            </div>
           </div>
-          <div class="col-md-6 form-group mt-3 mt-md-0">
-            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" required="">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 form-group mt-3">
-            <input type="text" name="date" class="form-control datepicker" id="date" placeholder="Pick a Date" required>
-          </div>
-          <div class="col-md-3 form-group mt-3">
-            <select id="time" name="time" class="form-select" required>
-              <!-- Options will be populated by JavaScript -->
-            </select>
-          </div>
+          <div class="row">
+            <div class="col-md-3 form-group mt-3">
+              <input type="text" name="date" class="form-control datepicker" id="date" placeholder="Pick a Date" required>
+            </div>
+            <div class="col-md-3 form-group mt-3">
+              <select id="time" name="time" class="form-select" required>
+                <!-- Options will be populated by JavaScript -->
+              </select>
+            </div>
 
-          <div class="col-md-3 form-group mt-3">
-            <select name="service_id" id="service" class="form-select" required="">
-              <option selected disabled>Select Service</option>
-              @foreach($services as $service)
-              <option value="{{ $service->id }}">{{ $service->name }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="col-md-3 form-group mt-3">
-            <select name="user_id" id="doctor" class="form-select" required>
-              <option selected disabled>Select Doctor</option>
-              @foreach($doctors as $doctor)
+            <div class="col-md-3 form-group mt-3">
+              <select name="service_id" id="service" class="form-select" required="">
+                <option selected disabled>Select Service</option>
+                @foreach($services as $service)
+                <option value="{{ $service->id }}">{{ $service->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col-md-3 form-group mt-3">
+              <select name="user_id" id="doctor" class="form-select" required>
+                <option selected disabled>Select Doctor</option>
+                @foreach($doctors as $doctor)
                 <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                 @endforeach
-            </select>
+              </select>
+            </div>
+
           </div>
 
-        </div>
+          <div class="form-group mt-3">
+            <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
+          </div>
+          <div class="mt-3">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
+            <div class="text-center"><button type="submit">Make an Appointment</button></div>
+          </div>
+        </form>
 
-        <div class="form-group mt-3">
-          <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
-        </div>
-        <div class="mt-3">
-          <div class="loading">Loading</div>
-          <div class="error-message"></div>
-          <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
-          <div class="text-center"><button type="submit">Make an Appointment</button></div>
-        </div>
-      </form>
+      </div>
 
-    </div>
-
-  </section><!-- /Appointment Section -->
+    </section><!-- /Appointment Section -->
 
 
-  <!-- Doctors Section -->
-  <section id="doctors" class="doctors section">
+    <!-- Doctors Section -->
+    <section id="doctors" class="doctors section">
 
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Doctors</h2>
-    </div>
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Doctors</h2>
+      </div>
 
-    <div class="container">
+      <div class="container">
 
-      @php
-      $totalDoctors = count($doctors);
-      @endphp
-
-      <div class="row gy-4">
-        @foreach($doctors as $index => $doctor)
         @php
-        $colClass = 'col-lg-6'; // Default class
-        if ($totalDoctors % 2 == 1 && $index == $totalDoctors - 1) {
-          $colClass = 'col-lg-12';
-        }
+        $totalDoctors = count($doctors);
         @endphp
-        <div class="{{ $colClass }}" data-aos="fade-up" data-aos-delay="100">
-          <div class="team-member d-flex align-items-start">
-            <div class="member-info">
-              <h4>{{$doctor->name}}</h4>
-              <span>{{$doctor->phone}}</span>
-              <p>{{$doctor->description}}</p>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter-x"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""> <i class="bi bi-linkedin"></i> </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
-      </div>
 
-
-    </div>
-
-  </section><!-- /Doctors Section -->
-
-   <!-- Departments Section -->
-  <section id="departments" class="departments section">
-
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Departments</h2>
-    </div>
-
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-      <div class="row">
-        <div class="col-lg-3">
-          <ul class="nav nav-tabs flex-column">
-            <li class="nav-item">
-              <a class="nav-link active show" data-bs-toggle="tab" href="#departments-tab-1">Dental Clinic</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="tab" href="#departments-tab-2">Beauty Parlour</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-lg-9 mt-4 mt-lg-0">
-          <div class="tab-content">
-            <div class="tab-pane active show" id="departments-tab-1">
-              <div class="row">
-                <div class="col-lg-8 details order-2 order-lg-1">
-                  <h3>Dental</h3>
-                  <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
-                  <p>Et nobis maiores eius. Voluptatibus ut enim blanditiis atque harum sint. Laborum eos ipsum ipsa odit magni. Incidunt hic ut molestiae aut qui. Est repellat minima eveniet eius et quis magni nihil. Consequatur dolorem quaerat quos qui similique accusamus nostrum rem vero</p>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="departments-tab-2">
-              <div class="row">
-                <div class="col-lg-8 details order-2 order-lg-1">
-                  <h3>Parlour</h3>
-                  <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
-                  <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
+        <div class="row gy-4">
+          @foreach($doctors as $index => $doctor)
+          @php
+          $colClass = 'col-lg-6'; // Default class
+          if ($totalDoctors % 2 == 1 && $index == $totalDoctors - 1) {
+          $colClass = 'col-lg-12';
+          }
+          @endphp
+          <div class="{{ $colClass }}" data-aos="fade-up" data-aos-delay="100">
+            <div class="team-member d-flex align-items-start">
+              <div class="member-info">
+                <h4>{{$doctor->name}}</h4>
+                <span>{{$doctor->phone}}</span>
+                <p>{{$doctor->description}}</p>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""> <i class="bi bi-linkedin"></i> </a>
                 </div>
               </div>
             </div>
           </div>
+          @endforeach
         </div>
+
+
       </div>
 
-    </div>
+    </section><!-- /Doctors Section -->
 
-  </section><!-- /Departments Section -->
+    <!-- Departments Section -->
+    <section id="departments" class="departments section">
 
-  <!-- Faq Section -->
-  <section id="faq" class="faq section light-background">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Departments</h2>
+      </div>
 
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Frequently Asked Questions</h2>
-      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-    </div><!-- End Section Title -->
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-    <div class="container">
-
-      <div class="row justify-content-center">
-
-        <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="faq-container">
-
-
-            <div class="faq-item">
-              <h3>Most Asked Question number 1</h3>
-              <div class="faq-content">
-                <p>Most Asked Question number 1's answer</p>
+        <div class="row">
+          <div class="col-lg-3">
+            <ul class="nav nav-tabs flex-column">
+              <li class="nav-item">
+                <a class="nav-link active show" data-bs-toggle="tab" href="#departments-tab-1">Dental Clinic</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#departments-tab-2">Beauty Parlour</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-9 mt-4 mt-lg-0">
+            <div class="tab-content">
+              <div class="tab-pane active show" id="departments-tab-1">
+                <div class="row">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3>Dental</h3>
+                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
+                    <p>Et nobis maiores eius. Voluptatibus ut enim blanditiis atque harum sint. Laborum eos ipsum ipsa odit magni. Incidunt hic ut molestiae aut qui. Est repellat minima eveniet eius et quis magni nihil. Consequatur dolorem quaerat quos qui similique accusamus nostrum rem vero</p>
+                  </div>
+                </div>
               </div>
-              <i class="faq-toggle bi bi-chevron-right"></i>
+              <div class="tab-pane" id="departments-tab-2">
+                <div class="row">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3>Parlour</h3>
+                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
+                    <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Departments Section -->
+
+    <!-- Faq Section -->
+    <section id="faq" class="faq section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Frequently Asked Questions</h2>
+        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+
+          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="faq-container">
+
+
+              <div class="faq-item">
+                <h3>Most Asked Question number 1</h3>
+                <div class="faq-content">
+                  <p>Most Asked Question number 1's answer</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+
+              <div class="faq-item">
+                <h3>Most Asked Question number 2</h3>
+                <div class="faq-content">
+                  <p>Most Asked Question number 2's answer</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+
+              <div class="faq-item">
+                <h3>Most Asked Question number 3</h3>
+                <div class="faq-content">
+                  <p>Most Asked Question number 3's answer</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+
             </div>
 
-            <div class="faq-item">
-              <h3>Most Asked Question number 2</h3>
-              <div class="faq-content">
-                <p>Most Asked Question number 2's answer</p>
-              </div>
-              <i class="faq-toggle bi bi-chevron-right"></i>
-            </div>
+          </div><!-- End Faq Column-->
 
-            <div class="faq-item">
-              <h3>Most Asked Question number 3</h3>
-              <div class="faq-content">
-                <p>Most Asked Question number 3's answer</p>
-              </div>
-              <i class="faq-toggle bi bi-chevron-right"></i>
-            </div>
+        </div>
 
+      </div>
+
+    </section><!-- /Faq Section -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+
+      <div class="container">
+
+        <div class="row align-items-center">
+
+          <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
+            <h3>Testimonials</h3>
+            <p>
+              Discover the transformative power of smiles through our dental clinic's before-and-after cases, showcasing our commitment to quality care and patient satisfaction.
+            </p>
           </div>
 
-        </div><!-- End Faq Column-->
+          <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
 
-      </div>
-
-    </div>
-
-  </section><!-- /Faq Section -->
-
-  <!-- Testimonials Section -->
-  <section id="testimonials" class="testimonials section">
-
-    <div class="container">
-
-      <div class="row align-items-center">
-
-        <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
-          <h3>Testimonials</h3>
-          <p>
-            Discover the transformative power of smiles through our dental clinic's before-and-after cases, showcasing our commitment to quality care and patient satisfaction.
-          </p>
-        </div>
-
-        <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="swiper init-swiper">
-            <script type="application/json" class="swiper-config">
+            <div class="swiper init-swiper">
+              <script type="application/json" class="swiper-config">
               {
-                "loop": true,
-                "speed": 600,
-                "autoplay": {
-                  "delay": 5000
-                },
-                "slidesPerView": "auto",
-                "pagination": {
-                  "el": ".swiper-pagination",
-                  "type": "bullets",
-                  "clickable": true
-                }
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                      "delay": 5000
+                  },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                      "el": ".swiper-pagination",
+                      "type": "bullets",
+                      "clickable": true
+                  }
               }
-            </script>
-            <div class="swiper-wrapper">
 
-              <div class="swiper-slide">
-                <div class="testimonial-item">
-                  <div class="d-flex">
-                    <img src="{{ asset('assets/img/testimonials/testimonials-1.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
-                    <div>
-                      <h3>Saul Goodman</h3>
-                      <h4>Ceo &amp; Founder</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </script>
+              <div class="swiper-wrapper">
+
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="{{ asset('assets/img/testimonials/testimonials-1.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Saul Goodman</h3>
+                        <h4>Ceo &amp; Founder</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
                       </div>
                     </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
                   </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div><!-- End testimonial item -->
+                </div><!-- End testimonial item -->
 
-              <div class="swiper-slide">
-                <div class="testimonial-item">
-                  <div class="d-flex">
-                    <img src="{{ asset('assets/img/testimonials/testimonials-2.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
-                    <div>
-                      <h3>Sara Wilsson</h3>
-                      <h4>Designer</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="{{ asset('assets/img/testimonials/testimonials-2.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Sara Wilsson</h3>
+                        <h4>Designer</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
                       </div>
                     </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
                   </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div><!-- End testimonial item -->
+                </div><!-- End testimonial item -->
 
-              <div class="swiper-slide">
-                <div class="testimonial-item">
-                  <div class="d-flex">
-                    <img src="{{ asset('assets/img/testimonials/testimonials-3.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
-                    <div>
-                      <h3>Jena Karlis</h3>
-                      <h4>Store Owner</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="{{ asset('assets/img/testimonials/testimonials-3.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Jena Karlis</h3>
+                        <h4>Store Owner</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
                       </div>
                     </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
                   </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div><!-- End testimonial item -->
+                </div><!-- End testimonial item -->
 
-              <div class="swiper-slide">
-                <div class="testimonial-item">
-                  <div class="d-flex">
-                    <img src="{{ asset('assets/img/testimonials/testimonials-4.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
-                    <div>
-                      <h3>Matt Brandon</h3>
-                      <h4>Freelancer</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="{{ asset('assets/img/testimonials/testimonials-4.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Matt Brandon</h3>
+                        <h4>Freelancer</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
                       </div>
                     </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
                   </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div><!-- End testimonial item -->
+                </div><!-- End testimonial item -->
 
-              <div class="swiper-slide">
-                <div class="testimonial-item">
-                  <div class="d-flex">
-                    <img src="{{ asset('assets/img/testimonials/testimonials-5.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
-                    <div>
-                      <h3>John Larson</h3>
-                      <h4>Entrepreneur</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="{{ asset('assets/img/testimonials/testimonials-5.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>John Larson</h3>
+                        <h4>Entrepreneur</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
                       </div>
                     </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
                   </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>I cannot express how grateful I am for the amazing care I received at [Dental Clinic Name]. The staff was incredibly welcoming and professional, making me feel at ease from the moment I walked in. Dr. [Dentist's Name] took the time to explain every procedure, and I truly appreciated their attention to detail. My smile has never looked better! I highly recommend this clinic to anyone looking for top-notch dental care.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div><!-- End testimonial item -->
+                </div><!-- End testimonial item -->
 
+              </div>
+              <div class="swiper-pagination"></div>
             </div>
-            <div class="swiper-pagination"></div>
+
           </div>
 
         </div>
 
       </div>
 
-    </div>
+    </section><!-- /Testimonials Section -->
 
-  </section><!-- /Testimonials Section -->
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery section">
 
-  <!-- Gallery Section -->
-  <section id="gallery" class="gallery section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Gallery</h2>
+        <p>Discover the transformative power of smiles through our dental clinic's before-and-after cases, showcasing our commitment to quality care and patient satisfaction.</p>
+      </div><!-- End Section Title -->
 
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Gallery</h2>
-      <p>Discover the transformative power of smiles through our dental clinic's before-and-after cases, showcasing our commitment to quality care and patient satisfaction.</p>
-    </div><!-- End Section Title -->
+      <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
 
-    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-0">
 
-      <div class="row g-0">
-
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-1.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-1.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-1.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
+            </div>
+          </div><!-- End Gallery Item -->
 
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-2.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-2.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-2.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
+            </div>
+          </div><!-- End Gallery Item -->
 
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-3.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-3.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-3.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
+            </div>
+          </div><!-- End Gallery Item -->
 
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-4.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-4.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-4.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
+            </div>
+          </div><!-- End Gallery Item -->
 
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-5.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-5.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-5.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
+            </div>
+          </div><!-- End Gallery Item -->
 
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-6.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-6.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-6.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
+            </div>
+          </div><!-- End Gallery Item -->
 
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-7.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-7.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-7.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
+            </div>
+          </div><!-- End Gallery Item -->
 
-        <div class="col-lg-3 col-md-4">
-          <div class="gallery-item">
-            <a href="assets/img/gallery/gallery-8.jpg" class="glightbox" data-gallery="images-gallery">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-8.jpg" class="glightbox" data-gallery="images-gallery">
               <img src="{{ asset('assets/img/gallery/gallery-8.jpg') }}" alt="" class="img-fluid">
             </a>
-          </div>
-        </div><!-- End Gallery Item -->
-
-      </div>
-
-    </div>
-
-  </section><!-- /Gallery Section -->
-
-  <!-- Contact Section -->
-  <section id="contact" class="contact section">
-
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Contact</h2>
-    </div><!-- End Section Title -->
-
-    <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
-      <iframe style="border:0; width: 100%; height: 270px;" 
-      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d24175.34840238774!2d71.7390264!3d34.1515327!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d939cc8305d22d%3A0x4453f01f10452a27!2sMansha%20Dental%20and%20Cosmetics!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" 
-      frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-    </div><!-- End Google Maps -->
-
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-      <div class="row gy-4">
-
-        <div class="col-lg-4">
-          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <i class="bi bi-geo-alt flex-shrink-0"></i>
-            <div>
-              <h3>Location</h3>
-              <p>Afaq Plaza, Peshawar Road, Charsadda, Charsadda, KP 24420</p>
             </div>
-          </div><!-- End Info Item -->
-
-          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-            <i class="bi bi-telephone flex-shrink-0"></i>
-            <div>
-              <h3>Call Us</h3>
-              <p>+1 5589 55488 55</p>
-            </div>
-          </div><!-- End Info Item -->
-
-          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
-            <i class="bi bi-envelope flex-shrink-0"></i>
-            <div>
-              <h3>Email Us</h3>
-              <p>info@example.com</p>
-            </div>
-          </div><!-- End Info Item -->
+          </div><!-- End Gallery Item -->
 
         </div>
 
-        <div class="col-lg-8">
-          <form action="{{ route('contact.send') }}" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-            @csrf
-            <div class="row gy-4">
+      </div>
 
-              <div class="col-md-6">
-                <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+    </section><!-- /Gallery Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+      </div><!-- End Section Title -->
+
+      <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
+        <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d24175.34840238774!2d71.7390264!3d34.1515327!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d939cc8305d22d%3A0x4453f01f10452a27!2sMansha%20Dental%20and%20Cosmetics!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+      </div><!-- End Google Maps -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h3>Location</h3>
+                <p>{!! $address !!}</p>
               </div>
+            </div><!-- End Info Item -->
 
-              <div class="col-md-6 ">
-                <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Call Us</h3>
+                <p>+1 5589 55488 55</p>
               </div>
+            </div><!-- End Info Item -->
 
-              <div class="col-md-12">
-                <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h3>Email Us</h3>
+                <p>info@example.com</p>
               </div>
+            </div><!-- End Info Item -->
 
-              <div class="col-md-12">
-                <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+          </div>
+
+          <div class="col-lg-8">
+            <form action="{{ route('contact.send') }}" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              @csrf
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                  <button type="submit">Send Message</button>
+                </div>
+
               </div>
+            </form>
+          </div><!-- End Contact Form -->
 
-              <div class="col-md-12 text-center">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                <button type="submit">Send Message</button>
-              </div>
-
-            </div>
-          </form>
-        </div><!-- End Contact Form -->
+        </div>
 
       </div>
 
-    </div>
+    </section><!-- /Contact Section -->
 
-  </section><!-- /Contact Section -->
+  </main>
 
-</main>
+  <footer id="footer" class="footer light-background">
 
-<footer id="footer" class="footer light-background">
-
-  <div class="container footer-top">
-    <div class="row gy-4 justify-content-around">
-      <div class="col-lg-4 col-md-6 footer-about">
-        <a href="#" class="logo d-flex align-items-center">
+    <div class="container footer-top">
+      <div class="row gy-4 justify-content-around">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="#" class="logo d-flex align-items-center">
           <span class="sitename">Dental Clinic</span>
         </a>
-        <div class="footer-contact pt-3">
-          <p>Afaq Plaza, Peshawar Road, Charsadda</p>
-          <p>Charsadda, KP 24420</p>
-          <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-          <p><strong>Email:</strong> <span>info@example.com</span></p>
+          <div class="footer-contact pt-3">
+            <p>{!! $address !!}</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
         </div>
-        <div class="social-links d-flex mt-4">
-          <a href=""><i class="bi bi-twitter-x"></i></a>
-          <a href=""><i class="bi bi-facebook"></i></a>
-          <a href=""><i class="bi bi-instagram"></i></a>
-          <a href=""><i class="bi bi-linkedin"></i></a>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
         </div>
-      </div>
 
-      <div class="col-lg-2 col-md-3 footer-links">
-        <h4>Useful Links</h4>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Terms of service</a></li>
-          <li><a href="#">Privacy policy</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-2 col-md-3 footer-links">
-        <h4>Our Services</h4>
-        <ul>
-          @foreach($services as $service)
-          <li><a href="#services">{{ $service->name }}</a></li>
-          @endforeach
-        </ul>
-      </div>
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            @foreach($services->take(7) as $service)
+            <li><a href="#services">{{ $service->name }}</a></li>
+            @endforeach
+            <li><a href="#services">And More ...</a></li>
+          </ul>
+        </div>
 
         <!-- <div class="col-lg-2 col-md-3 footer-links">
           <h4>Hic solutasetp</h4>
@@ -877,13 +876,12 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-  </script><script src="https://chatcraft.fineit.io/embed.js/03d2a370-5e50-47ce-b0d0-c6729da317ce/"></script>
+  </script>
+  <script src="https://chatcraft.fineit.io/embed.js/03d2a370-5e50-47ce-b0d0-c6729da317ce/"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
     const timeSelect = document.getElementById('time');
-    let start_time = '{{ $timings->start_time }}';
-    let end_time = '{{ $timings->end_time }}';
     // Function to format time to 12-hour clock with AM/PM
     function formatTimeTo12Hour(hours) {
       const period = hours >= 12 ? 'PM' : 'AM';
@@ -893,7 +891,7 @@
 
     // Function to generate time options
     function generateTimeOptions() {
-      for (let hours = parseInt(start_time); hours <= parseInt(end_time); hours++) {
+      for (let hours = parseInt({{$start_time}}); hours <= parseInt({{$end_time}}); hours++) {
         const value = `${('0' + hours).slice(-2)}:00`;
         const text = formatTimeTo12Hour(hours);
         const option = new Option(text, value);
@@ -914,16 +912,15 @@
   </script>
 
 
-
-
-<style type="text/css">
+  <style type="text/css">
   @media (max-width: 992px) {
-    .departments .nav-link.active {
-        color: #fff!important;
-        background: var(--accent-color);
-    }
-}
-</style>
+      .departments .nav-link.active {
+          color: #fff !important;
+          background: var(--accent-color);
+      }
+  }
+
+  </style>
 </body>
 
 </html>

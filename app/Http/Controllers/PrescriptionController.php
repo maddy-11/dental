@@ -10,19 +10,41 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PrescriptionController extends Controller
 {
-     public function index($id)
+    public function index()
     {
-        $appointment = Appointment::findOrFail($id);
-        return view('content.prescriptions.create', compact('appointment'));
+        if (\Auth::user()->is_admin) {
+            $prescriptions = Prescription::all();
+        } 
+        else if (\Auth::user()->status == 'Doctor') {
+            $prescriptions = Prescription::whereHas('appointment', function($query) {
+                $query->where('user_id', \Auth::id());
+            })->get();
+        } 
+        else if (\Auth::user()->status == 'Patient') {
+            $prescriptions = Prescription::whereHas('appointment', function($query) {
+                $query->where('patient_id', \Auth::id());
+            })->get();
+        }
+        return view('content.prescriptions.index', compact('prescriptions'));
     }
 
+    public function patientPrescriptions($id)
+    {
+        $prescriptions = Prescription::whereHas('appointment', function($query) use ($id) {
+            $query->where('patient_id', $id);
+        })->get();
+
+        return view('content.prescriptions.index', compact('prescriptions'));
+    }
+
+
     public function downloadPDF($id)
-{
-    $appointment = Appointment::findOrFail($id);
-    $prescriptions = Prescription::where('appointment_id', $id)->get();
-    $pdf = PDF::loadView('content.prescriptions.prescriptionPdf', compact('prescriptions', 'appointment'));
-    return $pdf->download('document.pdf');
-}
+    {
+        $appointment = Appointment::findOrFail($id);
+        $prescriptions = Prescription::where('appointment_id', $id)->get();
+        $pdf = PDF::loadView('content.prescriptions.prescriptionPdf', compact('prescriptions', 'appointment'));
+        return $pdf->download('prescription.pdf');
+    }
 
     public function create($id)
     {
@@ -88,4 +110,24 @@ class PrescriptionController extends Controller
     {
         dd('here');
     }
+    public function get_prescription($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $prescriptions = Prescription::where('appointment_id', $id)->get();
+        return view('content.prescriptions.prescription', compact('prescriptions', 'appointment'));
+
+    }
+
+    public function get_latest_prescription()
+    {
+        $appointment = Appointment::where('patient_id', \Auth::id())->orderBy('created_at', 'desc')->first();
+        $prescriptions = Prescription::where('appointment_id', $appointment->id)->get();
+        // $prescription = Prescription::whereHas('appointment', function($query) {
+        //     $query->where('patient_id', \Auth::id());
+        // })->orderBy('created_at', 'desc')->first();
+
+
+        return view('content.prescriptions.prescription', compact('prescriptions', 'appointment'));
+    }
+
 }

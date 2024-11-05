@@ -4,10 +4,12 @@
 
 @section('content')
 <style type="text/css">
-  td, th{
-    text-align:center!important;
-  }
-  .form-input{
+td,
+th {
+    text-align: center !important;
+}
+
+.form-input {
     display: block;
     padding: .543rem .9375rem;
     font-size: .9375rem;
@@ -22,7 +24,8 @@
     border: var(--bs-border-width) solid #ced1d5;
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-  }
+}
+
 </style>
 <div class="card">
   <div class="d-flex justify-content-between align-items-center pe-3">
@@ -35,13 +38,13 @@
     <button class="btn btn-primary" id="filterBtn">Filter</button>
   </div>
   <ul class="nav nav-tabs" id="tabSection1" role="tablist">
-        <li class="nav-item col-md-6" role="presentation">
-            <a class="nav-link active" id="home-tab1" data-bs-toggle="tab" href="#home1" role="tab" aria-controls="home" aria-selected="false">Fixed Salaries</a>
-        </li>
-        <li class="nav-item col-md-6" role="presentation">
-            <a class="nav-link" id="profile-tab1" data-bs-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-selected="true">Percentage Salaries</a>
-        </li>
-    </ul>
+    <li class="nav-item col-md-6" role="presentation">
+      <a class="nav-link active" id="home-tab1" data-bs-toggle="tab" href="#home1" role="tab" aria-controls="home" aria-selected="false">Fixed Salaries</a>
+    </li>
+    <li class="nav-item col-md-6" role="presentation">
+      <a class="nav-link" id="profile-tab1" data-bs-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-selected="true">Percentage Salaries</a>
+    </li>
+  </ul>
   <div class="tab-content" id="tabContent1">
     <div class="tab-pane fade show active" id="home1" role="tabpanel" aria-labelledby="home-tab1">
 
@@ -70,7 +73,7 @@
     {{-- // percentage salaries --}}
 
     <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="profile-tab1">
-      <div >
+      <div>
         <div class="table-responsive text-nowrap">
           <table class="table datatable" id="percentagePaymentsTable">
             <!-- Table structure remains the same -->
@@ -93,7 +96,6 @@
 </div>
 
 
-
 <!-- Payment Modal -->
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
@@ -105,19 +107,19 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-            <label for="totalPendingAmount">Total Pending Amount</label>
-            <input type="text" class="form-control" id="totalPendingAmount" value="1000" readonly>
+        <div class="form-group">
+          <label for="totalPendingAmount">Total Pending Amount</label>
+          <input type="text" class="form-control" id="totalPendingAmount" value="1000" readonly>
+        </div>
+        <div class="form-group">
+          <label for="enterAmount">Enter Amount</label>
+          <div class="row justify-content-around">
+            <input type="number" class="form-input col-md-8" id="enterAmount" placeholder="Enter amount">
+            <input type="hidden" id="payment_id_input">
+            <button type="button" id="payBtn" class="btn btn-primary col-lg-3">Total</button>
           </div>
-          <div class="form-group">
-            <label for="enterAmount">Enter Amount</label>
-            <div class="row justify-content-around">
-              <input type="number" class="form-input col-md-8" id="enterAmount" placeholder="Enter amount">
-              <input type="hidden" id="payment_id_input">
-              <button type="button" id="payBtn" class="btn btn-primary col-lg-3">Total</button>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary form-control mt-3 pay_save">Pay Now</button>
+        </div>
+        <button type="submit" class="btn btn-primary form-control mt-3 pay_save">Pay Now</button>
       </div>
     </div>
   </div>
@@ -125,88 +127,88 @@
 @endsection
 @push('page-scripts')
 <script type="text/javascript">
-  $(document).on('click','.paymentModalBtn', function() {
-   let amount = $(this).data('payment_amount');
-   let paymentId = $(this).data('payment_id');
-   $('#payment_id_input').val(paymentId);
-   $('#totalPendingAmount').val(amount);
-   $('#paymentModal').modal('show');
- });
+$(document).on('click', '.paymentModalBtn', function () {
+    let amount = $(this).data('payment_amount');
+    let paymentId = $(this).data('payment_id');
+    $('#payment_id_input').val(paymentId);
+    $('#totalPendingAmount').val(amount);
+    $('#paymentModal').modal('show');
+});
 
-  $('#manualCloseButton').on('click', function() {
+$('#manualCloseButton').on('click', function () {
     $('#paymentModal').modal('hide');
-  });
-   
-  $('#payBtn').on('click',function(){
+});
+
+$('#payBtn').on('click', function () {
     $('#enterAmount').val($('#totalPendingAmount').val())
-  });
-  
+});
+
 // -------------------
-  $('.pay_save').on('click', function(e){
+$('.pay_save').on('click', function (e) {
     e.preventDefault()
     let id = $('#payment_id_input').val();
-    let paymentUrl = '{{ route('pending_payments.pay', ['id' => ':id']) }}';
+    let paymentUrl = '{{ route('pending_payments.pay', ['id'=>':id ']) }}';
     paymentUrl = paymentUrl.replace(':id', id);
     $.ajax({
-      url: paymentUrl,
-      type: 'POST',
-      headers: {
-        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-    },
-      data: {
-        'amount': $('#enterAmount').val()
-      },
-      success: function(response){
-        alert('Payment Updated Successfully');
-        location.reload();
-      },
-      error: function(response){
-        alert('Payment Failed');
-      }
+        url: paymentUrl,
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        data: {
+            'amount': $('#enterAmount').val()
+        },
+        success: function (response) {
+            alert('Payment Updated Successfully');
+            location.reload();
+        },
+        error: function (response) {
+            alert('Payment Failed');
+        }
     });
-  });
+});
+
 </script>
 
 <script>
-  jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
-    $('#filterBtn').on('click', function() {
-      let dateRange = $('#dateRangePicker').val().split(' - ');
-      let startDate = dateRange[0];
-      let endDate = dateRange[1];
+    $('#filterBtn').on('click', function () {
+        let dateRange = $('#dateRangePicker').val().split(' - ');
+        let startDate = dateRange[0];
+        let endDate = dateRange[1];
 
-      fetchSalaries(startDate, endDate);
+        fetchSalaries(startDate, endDate);
     });
 
     var start = moment().subtract(29, 'days');
     var end = moment();
     fetchSalaries(start.format('MM/DD/YYYY'), end.format('MM/DD/YYYY'));
 
-
     function fetchSalaries(startDate, endDate) {
-      $.ajax({
-        url: "{{ route('pending_payments.index') }}",
-        type: 'GET',
-        data: {
-          start_date: startDate,
-          end_date: endDate
-        },
-        success: function(response) {
-          updateTable('#fixedPaymentsTable tbody', response.fixedPayments);
-          updateTable('#percentagePaymentsTable tbody', response.percentagePayments);
-        }
-      });
+        $.ajax({
+            url: "{{ route('pending_payments.index') }}",
+            type: 'GET',
+            data: {
+                start_date: startDate,
+                end_date: endDate
+            },
+            success: function (response) {
+                updateTable('#fixedPaymentsTable tbody', response.fixedPayments);
+                updateTable('#percentagePaymentsTable tbody', response.percentagePayments);
+            }
+        });
     }
 
     function updateTable(tableBodySelector, payments) {
-      let tableBody = $(tableBodySelector);
-      tableBody.empty();
+        let tableBody = $(tableBodySelector);
+        tableBody.empty();
 
-      if(payments.length > 0) {
-        const baseUrl = "{{ route('pending_payments.pending.get', ['id' => '__DOCTOR_ID__']) }}";
-        payments.forEach(function(payment) {
-          const doctorUrl = baseUrl.replace('__DOCTOR_ID__', payment.doctor.id);
-          tableBody.append(`
+        if (payments.length > 0) {
+            const baseUrl = "{{ route('pending_payments.pending.get', ['id' => '__DOCTOR_ID__']) }}";
+            payments.forEach(function (payment) {
+                const doctorUrl = baseUrl.replace('__DOCTOR_ID__', payment.doctor.id);
+                tableBody.append(`
             <tr>
                 <td>${payment.doctor.name}</td>
                 <td>${payment.total_pending_salary - payment.total_paid_salary}</td>
@@ -221,38 +223,39 @@
                 </td>
             </tr>
             `);
-        });
-      } else {
-        tableBody.append('<tr><td colspan="6">No payments found for the selected date range.</td></tr>');
-      }
+            });
+        } else {
+            tableBody.append('<tr><td colspan="6">No payments found for the selected date range.</td></tr>');
+        }
     }
 
-    $(function() {
+    $(function () {
 
-      var start = moment().startOf('month');
-      var end = moment();
+        var start = moment().startOf('month');
+        var end = moment();
 
-      function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-      }
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
 
-      $('#dateRangePicker').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-         'Today': [moment(), moment()],
-         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-         'This Month': [moment().startOf('month'), moment()],
-         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-       }
-     }, cb);
+        $('#dateRangePicker').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment()],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
 
-      cb(start, end);
+        cb(start, end);
 
     });
 
-  });        
+});
+
 </script>
 @endpush

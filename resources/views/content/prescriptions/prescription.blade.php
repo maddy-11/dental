@@ -1,26 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prescription</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="prescription-page">
-        <header>
-            <h1>{{ $brandName }}</h1>
-            <p>{!! $address !!}</p>
-            <p>Phone: {{$clinic_phone}}</p>
-        </header>
+@extends('layouts/contentNavbarLayout')
 
-        <div class="patient-info">
-            <p><strong>Patient Name:</strong> {{ $appointment->name }}</p>
-            <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</p>
-        </div>
+@section('title', 'Prescription')
 
-        <div class="prescription-details">
-            <h2>Prescription</h2>
+@section('content')
+<div class="col-10 m-auto p-3">
+    <div class="d-flex">
+        <button onclick="goBack()" class="btn btn-secondary me-3 ms-auto">Back</button>
+        <a href="javascript:void(0)" id="downloadPdfButton" class="btn btn-primary me-3">Download PDF</a>
+    </div>
+</div>
+<div class="prescription-page">
+    <header>
+        <h1>{{ $brandName }}</h1>
+        <p>{!! $address !!}</p>
+        <p>Phone: {{$clinic_phone}}</p>
+    </header>
+
+    <div class="patient-info">
+        <p><strong>Patient Name:</strong> {{ $appointment->name }}</p>
+        <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</p>
+    </div>
+
+    <div class="prescription-details">
+        <h2>Prescription</h2>
+        <div class="table-responsive">
             <table class="medication-table table">
                 <thead>
                     <tr>
@@ -45,13 +48,12 @@
                 </tbody>
             </table>
         </div>
-
-        <footer>
-            <p>Thank you for choosing our clinic. Get well soon!</p>
-        </footer>
     </div>
-</body>
-</html>
+
+    <footer>
+        <p>Thank you for choosing our clinic. Get well soon!</p>
+    </footer>
+</div>
 <style>
 /* Basic reset */
 * {
@@ -68,13 +70,14 @@ body {
 }
 
 .prescription-page {
-    width: 100%;
+    width: 80%;
+    margin:auto;
     height: 100vh; /* Full height for printing */
     background: #fff;
     border-radius: 8px;
     padding: 25px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
+/*    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);*/
+border: 1px solid #ddd;
 }
 
 /* Header Styling */
@@ -201,3 +204,43 @@ footer p {
     }
 }
 </style>
+@endsection
+
+@push('page-scripts')
+<script type="text/javascript">
+    $('#downloadPdfButton').click(function() {
+        Swal.fire({
+            title: 'Loading...',
+            text: 'Generating your PDF, please wait.',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+            },
+        });
+        $.ajax({
+            url: '{{ route('prescription.download', ['id'=>$appointment->id])}}',
+            method: 'GET',
+            success: function(response) {
+                const blob = new Blob([data], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'document.pdf';
+                document.body.appendChild(link);
+                link.click();
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(link.href);
+                }, 100);
+            },
+            complete: function () {
+             Swal.close();
+         }
+     });
+    });
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+@endpush

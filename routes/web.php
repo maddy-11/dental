@@ -16,12 +16,11 @@ use App\Http\Controllers\PrescriptionMedicineController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\PaidSalaryController;
 use App\Http\Controllers\dashboard\Analytics;
-use App\Http\Controllers\ClinicTimingController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InvoiceController;
 
 
-Route::get('/', [HomeView::class, 'index'])->name('dashboard-analytics');
-
+Route::get('/', [HomeView::class, 'index'])->name('frontend');
 Route::get('login', [LoginBasic::class, 'index'])->name('login');
 Route::post('login', [LoginBasic::class, 'login'])->name('admin.login');
 
@@ -63,10 +62,11 @@ Route::prefix('portal')
 
 // dashboard
 	Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+	Route::get('appointments/last-30-days', [Analytics::class, 'getAppointmentsLast30Days'])->name('appointments.last.30_days');
 
 // clinicTiming
-	Route::get('/timing/edit', [ClinicTimingController::class, 'edit'])->name('timing.edit');
-	Route::put('/timing/edit', [ClinicTimingController::class, 'update'])->middleware('check.admin')->name('timing.update');
+	Route::get('/timing/edit', [SettingsController::class, 'edit'])->name('timing.edit');
+	Route::put('/timing/edit', [SettingsController::class, 'update'])->middleware('check.admin')->name('timing.update');
 
 
 // services
@@ -81,6 +81,7 @@ Route::prefix('portal')
 
 // appointments
 	Route::get('/appointments', [AppointmentController::class, 'index'])->name('all_appointments');
+	Route::get('/patient/appointments/{id}', [AppointmentController::class, 'patient_appointments'])->name('patient.appointments');
 	Route::get('/appointment/create', [AppointmentController::class, 'create'])->name('appointments.create');
 	Route::post('/appointment/store', [AppointmentController::class, 'store'])->name('appointments.store');
 
@@ -108,12 +109,14 @@ Route::prefix('portal')
 
 	// Payments
 	Route::get('/payments', [InvoiceController::class, 'index'])->name('payments.index');
+	Route::get('/payments/invoice/{id}', [InvoiceController::class, 'invoice'])->name('payments.invoice.get');
+	Route::get('/payments/invoice/download/{id}', [InvoiceController::class, 'downloadPDF'])->name('payments.invoice.download');
 	Route::get('/payments/fetch', [InvoiceController::class, 'fetch'])->name('payments.fetch');
 	Route::get('/view-receipt', [InvoiceController::class, 'index'])->name('payments.receipt');
 	Route::get('/payments/delete/{id}', [InvoiceController::class, 'destroy'])->name('payments.delete');
 
 	// Payments Details
-	Route::get('/payments/details/{id}', [PaymentController::class, 'index'])->name('payments.details.index');
+	Route::get('/payments/details/{id}/{start}/{end}', [PaymentController::class, 'index'])->name('payments.details.index');
 	Route::get('/payments/details/delete/{id}', [PaymentController::class, 'destroy'])->name('payments.details.delete');
 
 	// PendingPayments
@@ -139,13 +142,17 @@ Route::prefix('portal')
 
 
 	// Prescription
-	Route::get('/prescription/', [PrescriptionController::class, 'index'])->name('prescription.index');
+	Route::get('/prescriptions/', [PrescriptionController::class, 'index'])->name('prescription.index');
+	Route::get('/patient/prescriptions/{id}', [PrescriptionController::class, 'patientPrescriptions'])->name('patient.prescription.index');
 	Route::get('/prescription/download/{id}', [PrescriptionController::class, 'downloadPDF'])->name('prescription.download');
 	Route::get('/prescription/create/{id}', [PrescriptionController::class, 'create'])->name('prescription.create');
 	Route::post('/prescription/store', [PrescriptionController::class, 'store'])->name('prescription.store');
 	Route::get('/prescription/edit/{id}', [PrescriptionController::class, 'edit'])->name('prescription.edit');
 	Route::post('/prescription/update', [PrescriptionController::class, 'update'])->name('prescription.update');
 	Route::get('/prescription/delete/{id}', [PrescriptionController::class, 'destroy'])->name('prescription.delete');
+
+	Route::get('/prescription/{id}', [PrescriptionController::class, 'get_prescription'])->name('prescription.get');
+	Route::get('/latest-prescription/', [PrescriptionController::class, 'get_latest_prescription'])->name('prescription.latest.get');
 });
 Route::post('/contact', [HomeView::class, 'send'])->name('contact.send');
 Route::post('/appointment/store-front', [AppointmentController::class, 'store_front'])->name('appointments.store.front');

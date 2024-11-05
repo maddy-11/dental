@@ -8,18 +8,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use App\Mail\ContactMail;
-use App\Models\ClinicTiming;
 
 class HomeView extends Controller
 {
     public function index(){
         $services = Service::all();
         $doctors = User::where('status','Doctor')->get();
-        $timings = ClinicTiming::first();
-        if(!$timings){
-            return redirect()->route('timing.edit')->with('error', 'Set Timing First');
-        }
-        return view('index', compact('services', 'doctors', 'timings'));
+        return view('index', compact('services', 'doctors'));
     }
 
     public function send(Request $request) 

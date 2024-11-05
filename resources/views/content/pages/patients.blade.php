@@ -23,9 +23,10 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
-          <th>Email</th>
           <th>Username</th>
           <th>Phone</th>
+          <th>Visits</th>
+          <th>Prescriptions</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -34,10 +35,10 @@
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td> <span>{{ $user->name }}</span></td>
-          <td> <span>{{ $user->email }}</span></td>
           <td> <span>{{ $user->username }}</span></td>
-          {{-- <td><span class="badge bg-label-primary me-1">{{ $user->status }}</span></td> --}}
           <td> <span>{{ $user->phone }}</span></td>
+          <td><a href="{{ route('patient.appointments', ['id'=>$user->id]) }}" class="btn btn-primary">All Visits</a></td>
+          <td><a href="{{ route('patient.prescription.index', ['id'=>$user->id]) }}" class="btn btn-primary">Prescriptions</a></td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>

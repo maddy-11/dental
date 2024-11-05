@@ -16,7 +16,6 @@
   <div class="table-responsive text-nowrap px-5">
     <table class="table datatable">
       <thead class="table-dark">
-        <th>Patient</th>
         <th>Doctor</th>
         <th>DateTime</th>
         <th>Procedure</th>
@@ -26,7 +25,6 @@
     <tbody class="table-border-bottom-0">
         @foreach($examinations as $examination)
         <tr>
-          <td>{{ $examination->appointment->name }}</td>
           <td class="text-center">{{ $examination->doctor->name }}</td>
           <td>{{ \Carbon\Carbon::parse($examination->appointment->start_date_time)->format('l, F j, Y g:i A') }}</td>
           <td>{{ $examination->service->name }}</td>

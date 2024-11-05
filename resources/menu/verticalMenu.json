@@ -73,7 +73,7 @@
       ]
     },
     {
-      "menuHeader": "Appointment | Examination",
+      "menuHeader": "Appointment | Prescription",
       "allow":"doctor"
     },
     {
@@ -97,16 +97,27 @@
       ]
     },
     {
-      "name": "Examinations",
-      "icon": "menu-icon tf-icons fa fa-tooth",
+      "name": "Prescriptions",
+      "icon": "menu-icon tf-icons bx bx-receipt",
       "slug": "all-appointments",
-      "allow":"doctor",
-      "submenu": [
+      "url": "portal/prescriptions",
+      "allow":"doctor"
+    },
+    {
+      "name": "Visits",
+      "icon": "menu-icon tf-icons bx bx-receipt",
+      "slug": "all-appointments",
+      "allow":"patient",
+      "submenu":[
         {
-          "url": "portal/examinations",
-          "name": "Examinations",
-          "slug": "all-examinations",
-          "target": ""
+          "url": "portal/prescriptions",
+          "slug": "presctiptions",
+          "name": "All Visits"
+        },
+        {
+          "url": "latest-prescription",
+          "slug": "presctiptions",
+          "name": "Latest Prescription"
         }
       ]
     },
@@ -115,11 +126,22 @@
       "allow":"doctor"
     },
     {
+      "menuHeader": "Payments",
+      "allow":"patient"
+    },
+    {
       "url": "portal/payments",
       "name": "All Payments",
       "slug": "all-payments",
       "icon": "menu-icon tf-icons bx bx-credit-card",
       "allow":"admin"
+    },
+    {
+      "url": "portal/payments",
+      "name": "All Payments",
+      "slug": "all-payments",
+      "icon": "menu-icon tf-icons bx bx-credit-card",
+      "allow":"patient"
     },
     {
       "url": "portal/pending/payments/all",
@@ -189,7 +211,7 @@
       "allow":"admin"
     },
     {
-      
+
       "name": "",
       "slug": "",
       "icon": "",

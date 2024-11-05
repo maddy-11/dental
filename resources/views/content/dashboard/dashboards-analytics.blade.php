@@ -46,9 +46,8 @@
             <h6 class="card-title text-white text-center">Total Appointments</h6>
             <div class="d-flex align-items-center justify-content-center">
               <i class="fa fa-calendar fa-2x me-3"></i>
-              <h5 class="mb-0 text-white">{{ $total_appointments }}</h5>
+              <h5 class="mb-0 text-white">{{ $total_appointments }} </h5><span class="small ms-2">(In Last 30 Days)</span>
             </div>
-            <!-- <p class="mt-3 mb-0">Completed Appointments<span class="float-right">200</span></p> -->
           </div>
         </div>
       </div>
@@ -68,14 +67,20 @@
       </div>
     </div>
   </div>
-  <hr class="">
+  <hr>
+  {{-- graph --}}
+  <div id="appointmentModal" class="card p-5" style="display:none;height: 350px;width: 100%;">
+    <canvas id="appointmentChart"></canvas>
+  </div>
+  <hr>
   @endif
+
   <div class="card">
     <div class="d-flex align-items-center justify-content-between">
-    <h5 class="card-header">Active Appointments</h5>
-    @if(Auth::user()->status == 'Doctor' || Auth::user()->is_admin == true)
-    <a href="{{ route('appointments.create') }}" class="btn btn-primary me-2">Add New</a>
-    @endif
+      <h5 class="card-header">Active Appointments</h5>
+      @if(Auth::user()->status == 'Doctor' || Auth::user()->is_admin == true)
+      <a href="{{ route('appointments.create') }}" class="btn btn-primary me-2">Add New</a>
+      @endif
     </div>
     <hr class="m-0 p-0">
     <div class="table-responsive text-nowrap px-5">
@@ -251,9 +256,9 @@
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
                   <th>Phone</th>
+                  <th>Visits</th>
+                  <th>Prescriptions</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -262,9 +267,9 @@
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td> <span>{{ $user->name }}</span></td>
-                  <td> <span>{{ $user->email }}</span></td>
-                  <td><span class="badge bg-label-primary me-1">{{ $user->status }}</span></td>
                   <td> <span>{{ $user->phone }}</span></td>
+                  <td><a href="{{ route('patient.appointments', ['id'=>$user->id]) }}" class="btn btn-primary">All Visits</a></td>
+                  <td><a href="{{ route('patient.prescription.index', ['id'=>$user->id]) }}" class="btn btn-primary">Prescriptions</a></td>
                   <td class="text-center">
                     <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
@@ -299,9 +304,9 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Status</th>
             <th>Phone</th>
+            <th>Visits</th>
+            <th>Prescriptions</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -310,9 +315,9 @@
           <tr>
             <td>{{ $loop->iteration }}</td>
             <td> <span>{{ $user->name }}</span></td>
-            <td> <span>{{ $user->email }}</span></td>
-            <td><span class="badge bg-label-primary me-1">{{ $user->status }}</span></td>
             <td> <span>{{ $user->phone }}</span></td>
+            <td><a href="{{ route('patient.appointments', ['id'=>$user->id]) }}" class="btn btn-primary">All Visits</a></td>
+            <td><a href="{{ route('patient.prescription.index', ['id'=>$user->id]) }}" class="btn btn-primary">Prescriptions</a></td>
             <td class="text-center">
               <div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
@@ -341,10 +346,10 @@
 
   <div class="card">
     <div class="d-flex align-items-center justify-content-between">
-    <h5 class="card-header">Servcices</h5>
-    @if(Auth::user()->status == 'Doctor' || Auth::user()->is_admin == true)
-    <a href="{{ route('service.create') }}" class="btn btn-primary me-2">Add New</a>
-    @endif
+      <h5 class="card-header">Servcices</h5>
+      @if(Auth::user()->status == 'Doctor' || Auth::user()->is_admin == true)
+      <a href="{{ route('service.create') }}" class="btn btn-primary me-2">Add New</a>
+      @endif
     </div>
     <div class="table-responsive text-nowrap px-5">
       <table class="table datatable">
@@ -382,7 +387,115 @@
   </div>
 
   @endif
+  <style type="text/css">
+    td, th{
+      text-align:center !important;
+    }
+  </style>
   @endsection
   @push('page-scripts')
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <script>
+    $(document).ready(function() {
+        // Fetch data
+      $.ajax({
+        url: '/appointments/last-30-days',
+        url: '{{ route('appointments.last.30_days') }}',
+        method: 'GET',
+        success: function(data) {
+          const labels = Object.keys(data).reverse().map(date => formatDate(date));
+          const values = Object.values(data).reverse();
+          createChart(labels, values);
+          $('#appointmentModal').fadeIn();
+        },
+        error: function() {
+          console.error('Error fetching appointment data');
+        }
+      });
+    });
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const options = { month: 'short', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    function createChart(labels = [], data = []) {
+      const ctx = document.getElementById('appointmentChart').getContext('2d');
+
+  // Provide default data if labels or data arrays are empty
+      if (labels.length === 0 || data.length === 0) {
+        labels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'];
+        data = [3, 7, 4, 8, 6];
+      }
+
+      const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+      };
+
+  // Check if there's an existing chart instance, and destroy it if valid
+      if (window.appointmentChart instanceof Chart) {
+        window.appointmentChart.destroy();
+      }
+
+  // Create a new chart instance and assign it to window.appointmentChart
+      window.appointmentChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Appointments in Last 30 Days',
+            data: data,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderWidth: 2,
+            pointBorderColor: 'rgba(75, 192, 192, 1)',
+            pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+            pointBorderWidth: 1,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+        tension: 0.4  // Adds a curve to the line
+          }]
+        },
+        options: {
+          ...chartOptions,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Number of Appointments'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Date'
+              }
+            }
+          },
+          plugins: {
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              titleFont: { size: 14 },
+              bodyFont: { size: 12 },
+              padding: 10,
+              displayColors: false
+            },
+            legend: {
+              labels: {
+                font: {
+                  size: 14
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+  </script>
   @endpush

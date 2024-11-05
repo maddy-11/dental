@@ -3,6 +3,7 @@
 @section('title', 'Book An Appointment')
 @section('nav-title', 'Appointments')
 @section('content')
+@include('content.appointments.patientAndServiceModals')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -14,7 +15,7 @@
     @csrf
     <div class="row justify-content-center">
       <div class="col-md-5 form-group">
-        <select id="patient" name="patient_id" class="form-select" required="">
+        <select id="patient_select" name="patient_id" class="form-select select2" required="">
           <option selected disabled>Select Patient</option>
           @foreach($patients as $patient)
           <option data-phone="{{ $patient->phone }}" value="{{ $patient->id }}">
@@ -24,7 +25,7 @@
         </select>
       </div>
       <div class="col-md-1 d-flex justify-content-end align-items-center">
-        <button type="button" class="btn btn-primary">+</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#patientRegisterModal">+</button>
       </div>
       <div class="col-md-6 form-group mt-3 mt-md-0">
         <input type="tel" class="form-control bg-light" name="phone" id="phone" placeholder="Patient's Phone" required="" readonly>
@@ -43,7 +44,7 @@
 
       <div class="col-md-4 form-group mt-3 row border-end border-end-3 border-primary">
         <div class="col-md-10">
-          <select name="service_id" id="service" class="form-select" required="">
+          <select name="service_id" id="service_select" class="form-select select2" required="">
             <option selected disabled>Select Service</option>
             @foreach($services as $service)
             <option value="{{ $service->id }}">{{ $service->name }}</option>
@@ -51,12 +52,12 @@
           </select>
         </div>
         <div class="col-md-1">
-          <button type="button" class="btn btn-primary px-5">+</button>
+          <button type="button" class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#serviceRegisterModal">+</button>
         </div>
       </div>
 
       <div class="col-md-2 form-group mt-3 ms-5">
-        <select name="user_id" id="doctor" class="form-select" required="">
+        <select name="user_id" class="form-select select2" required="">
           <option selected disabled>Select Doctor</option>
           @foreach($doctors as $doctor)
           <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
@@ -79,15 +80,16 @@
 @push('page-scripts')
 <script>
   jQuery(document).ready(function($) {
-    $('#patient').select2({
+    $('.select2').select2({
       width: '100%',
+    });
+    $('#select2').select2({
+      width: '100%',
+      dropdownParent: $('#patientRegisterModal')
     });
   });
   document.addEventListener('DOMContentLoaded', () => {
     const timeSelect = document.getElementById('time');
-    let start_time = '{{ $timings->start_time }}';
-    let end_time = '{{ $timings->end_time }}';
-    // Function to format time to 12-hour clock with AM/PM
     function formatTimeTo12Hour(hours) {
       const period = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12 || 12; // Convert to 12-hour format
@@ -96,7 +98,7 @@
 
     // Function to generate time options
     function generateTimeOptions() {
-      for (let hours = parseInt(start_time); hours <= parseInt(end_time); hours++) {
+      for (let hours = parseInt({{$start_time}}); hours <= parseInt({{$end_time}}); hours++) {
         const value = `${('0' + hours).slice(-2)}:00`;
         const text = formatTimeTo12Hour(hours);
         const option = new Option(text, value);

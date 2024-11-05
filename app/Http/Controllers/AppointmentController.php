@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\User;
 use App\Models\Service;
-use App\Models\ClinicTiming;
 use Carbon\Carbon;
 
 class AppointmentController extends Controller
@@ -13,6 +12,12 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::orderBy('created_at', 'desc')->get();
+        return view('content.appointments.index', compact('appointments'));
+    }
+
+    public function patient_appointments($id)
+    {
+        $appointments = Appointment::where('patient_id', $id)->orderBy('created_at', 'desc')->get();
         return view('content.appointments.index', compact('appointments'));
     }
     public function doc_patient($status, $id)
@@ -25,14 +30,10 @@ class AppointmentController extends Controller
 
     public function create()
     {
-        $timings = ClinicTiming::first();
-        if(!$timings){
-            return redirect()->route('timing.edit')->with('error', 'Set Timing First');
-        }
         $services = Service::all();
         $doctors = User::where('status','Doctor')->get();
         $patients = User::where('status','Patient')->get();
-        return view('content.appointments.create', compact('services', 'doctors','patients', 'timings'));
+        return view('content.appointments.create', compact('services', 'doctors','patients'));
     }
 
     // Store a new appointment

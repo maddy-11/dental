@@ -8,8 +8,8 @@
 
                 <div class="modal-body">
                     <header>
-                        <p>Address: Afaq Plaza, Peshawar Road, Charsadda</p>
-                        <p>Phone: (555) 123-4567</p>
+                        <p>{{ $address }}</p>
+                        <p>Phone: {{ $clinic_phone }}</p>
                     </header>
 
                     <div class="patient-info">
@@ -19,6 +19,7 @@
 
                     <div class="prescription-details">
                         <h2>Prescription</h2>
+                        <div class="table-responsive">
                         <table class="medication-table table">
                             <thead>
                                 <tr>
@@ -42,6 +43,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">

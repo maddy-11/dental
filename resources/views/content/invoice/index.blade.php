@@ -30,7 +30,6 @@
             <tr>
                 <th>Patient</th>
                 <th class="text-center">Doctor</th>
-                <th>Service</th>
                 <th>Appointment Date</th>
                 <th>Amount</th>
                 <th>View All</th>
@@ -118,16 +117,16 @@
                     table.row.add([
                         payment.appointment.name,
                         payment.appointment.user.name,
-                        payment.appointment.service.name,
+                        // payment.appointment.service.name,
                         payment.appointment.start_date_time,
                         '<span class="bg-success rounded text-white btn btnSuccess">' + payment.payments_sum_amount + '</span>',
-                        '<a class="btn btn-primary" href="{{ url('portal/payments/details/') }}/' + payment.id + '">View All</a>',
+                        '<a class="btn btn-primary" href="{{ url('portal/payments/details/') }}/' + payment.id + '/' + start.format('MM-DD-YYYY') + '/' + end.format('MM-DD-YYYY') + '">View All</a>',
                         '<div class="dropdown">' +
                         '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                         '<i class="bx bx-dots-vertical-rounded"></i></button>' +
                         '<div class="dropdown-menu">' +
-                            // '<a class="dropdown-item" href="{{ url('payments/receipt') }}/' + payment.id + '"><i class="bx bx-edit-alt me-1"></i> View Receipt</a>' +
-                        '<a class="dropdown-item" href="{{ url('payments/delete') }}/' + payment.id + '"><i class="bx bx-trash me-1"></i> Delete</a>' +
+                        '<a class="dropdown-item" href="{{ url('portal/payments/invoice') }}/' + payment.id + '"><i class="bx bx-edit-alt me-1"></i> View Invoice</a>' +
+                        '<a class="dropdown-item" href="{{ url('portal/payments/delete') }}/' + payment.id + '"><i class="bx bx-trash me-1"></i> Delete</a>' +
                         '</div></div>'
                         ]).draw();
                 });
