@@ -35,7 +35,8 @@ $navbarDetached = ($navbarDetached ?? '');
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <!-- Search -->
-        <span class="app-brand-text demo menu-text text-secondary ms-2">Welcome </span> <span class="app-brand-text demo menu-text  ms-2">
+        {{-- <span class="app-brand-text demo menu-text text-secondary ms-2">Welcome </span>  --}}
+        <span class="app-brand-text demo menu-text  ms-2">
           {{-- @yield('nav-title', 'Dental') --}}
           {{Auth::user()->name}}
         </span>

@@ -85,8 +85,8 @@ class AppointmentController extends Controller
         unset($data['date'], $data['time']);
         if(!isset($data['name']))
         {
-        $user = User::findOrFail($data['patient_id']);
-        $data['name'] = $user->name;
+            $user = User::findOrFail($data['patient_id']);
+            $data['name'] = $user->name;
         }
         $appointment = Appointment::findOrFail($id);
         $appointment->fill($data);
@@ -114,6 +114,20 @@ class AppointmentController extends Controller
 
         return response('OK', 200);
     }
+
+    public function getBookedHours(Request $request)
+    {
+        $dateInput = $request->input('date');
+        $date = Carbon::parse($dateInput)->format('Y-m-d');
+        $bookedHours = Appointment::whereDate('start_date_time', $date)
+        ->pluck('start_date_time')
+        ->map(function ($dateTime) {
+            return (int) Carbon::parse($dateTime)->format('H');
+        });
+
+        return response()->json($bookedHours);
+    }
+
 
     // Delete an appointment
     public function destroy($id)

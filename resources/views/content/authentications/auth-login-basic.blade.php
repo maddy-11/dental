@@ -31,13 +31,11 @@
           <!-- Logo -->
           <div class="app-brand justify-content-center">
             <a href="{{url('/')}}" class="app-brand-link gap-2">
-              <span class="app-brand-logo demo">@include('_partials.macros',["width"=>25,"withbg"=>'var(--bs-primary)'])</span>
-              <span class="app-brand-text demo text-heading fw-bold">{{config('variables.templateName')}}</span>
+              <span class="app-brand-text demo text-heading fw-bold">{{ $brandName }}</span>
             </a>
           </div>
           <!-- /Logo -->
-          <h4 class="mb-1">Welcome to {{config('variables.templateName')}}! 👋</h4>
-          <p class="mb-6">Please sign-in to your account to have access to Admin Panel</p>
+          <h4 class="mb-1">Welcome to {{ $brandName }}! 👋</h4>
 
           <form id="formAuthentication" class="mb-6" action="{{ url('login') }}" method="POST">
             @csrf
@@ -60,13 +58,16 @@
                     Remember Me
                   </label>
                 </div>
-                <a href="{{url('auth/forgot-password-basic')}}">
+                {{-- <a href="{{url('auth/forgot-password-basic')}}">
                   <span>Forgot Password?</span>
-                </a>
+                </a> --}}
               </div>
             </div>
             <div class="mb-6">
               <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
+              <div class="my-1">
+              <a href="{{ route('dashboard') }}" class="btn btn-warning d-grid w-100">Back</a>
+            </div>
             </div>
           </form>
         </div>

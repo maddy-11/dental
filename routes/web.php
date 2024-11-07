@@ -20,7 +20,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InvoiceController;
 
 
-Route::get('/', [HomeView::class, 'index'])->name('frontend');
+Route::get('/', [HomeView::class, 'index'])->name('dashboard');
 Route::get('login', [LoginBasic::class, 'index'])->name('login');
 Route::post('login', [LoginBasic::class, 'login'])->name('admin.login');
 
@@ -28,14 +28,19 @@ Route::post('logout', [LoginBasic::class, 'logout'])->name('admin.logout');
 
 
 Route::prefix('admin')->group(function () {
-    Route::any('{any}', function ($any) {
-        return redirect("portal/$any");
-    })->where('any', '.*');
+	Route::any('{any}', function ($any) {
+		return redirect("portal/$any");
+	})->where('any', '.*');
 });
 
 Route::prefix('portal')
 ->middleware('auth')
 ->group(function () {
+
+	// dashboard
+	Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+	Route::get('appointments/last-30-days', [Analytics::class, 'getAppointmentsLast30Days'])->name('appointments.last.30_days');
+
 	Route::get('all-users', [HomeView::class, 'all_users'])->middleware('check.admin')->name('users.all');
 
 // account
@@ -60,14 +65,17 @@ Route::prefix('portal')
 	Route::post('/password/update', [ChangePassowrd::class, 'update'])->name('password.update');
 	Route::post('/password/reset/{id}', [ChangePassowrd::class, 'reset'])->middleware('check.admin')->name('password.reset');
 
-// dashboard
-	Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
-	Route::get('appointments/last-30-days', [Analytics::class, 'getAppointmentsLast30Days'])->name('appointments.last.30_days');
+// clinic settings
+	Route::middleware(['check.admin'])->group(function () {
+		Route::get('/settings/basic/edit', [SettingsController::class, 'editBasic'])->name('basics.edit');
+		Route::put('/settings/basic/edit', [SettingsController::class, 'updateBasicInfo'])->name('basics.update');
 
-// clinicTiming
-	Route::get('/timing/edit', [SettingsController::class, 'edit'])->name('timing.edit');
-	Route::put('/timing/edit', [SettingsController::class, 'update'])->middleware('check.admin')->name('timing.update');
+		Route::get('/settings/timing/edit', [SettingsController::class, 'editTimings'])->name('timing.edit');
+		Route::put('/settings/timing/edit', [SettingsController::class, 'updateTimings'])->name('timing.update');
 
+		Route::get('/settings/logos/edit', [SettingsController::class, 'editLogos'])->name('logos.edit');
+		Route::put('/settings/logos/edit', [SettingsController::class, 'updateLogos'])->name('logos.update');
+	});
 
 // services
 	Route::middleware(['check.admin'])->group(function () {
@@ -90,6 +98,7 @@ Route::prefix('portal')
 
 	Route::get('/appointments/delete/{id}', [AppointmentController::class, 'destroy'])->name('appointments.delete');
 	Route::get('/appointments/{status}/{id}', [AppointmentController::class, 'doc_patient'])->name('appointments.doc_patient');
+	Route::get('/appointments/booked-hours', [AppointmentController::class, 'getBookedHours'])->name('appointments.bookedHours');
 
 	// Designation
 	Route::resource('designations', DesignationController::class)->middleware('check.admin')->except(['show']);;
@@ -153,6 +162,17 @@ Route::prefix('portal')
 
 	Route::get('/prescription/{id}', [PrescriptionController::class, 'get_prescription'])->name('prescription.get');
 	Route::get('/latest-prescription/', [PrescriptionController::class, 'get_latest_prescription'])->name('prescription.latest.get');
+
+	// artisan optimize:clear
+	Route::get('/clear', function () {
+		\Artisan::call('optimize:clear');
+		return "Cache is cleared!";
+	});
+
+	Route::get('/storage-link', function () {
+		\Artisan::call('storage:link');
+		return "Storage Linked Successfully";
+	});
 });
 Route::post('/contact', [HomeView::class, 'send'])->name('contact.send');
 Route::post('/appointment/store-front', [AppointmentController::class, 'store_front'])->name('appointments.store.front');

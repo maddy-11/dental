@@ -49,19 +49,19 @@
                                 @endforeach
                             </select>
                         </td>
-                        <td><input type="number" class="form-control" value="{{ (int)$prescription->details['duration'] ?? 0 }}" name="duration[]" placeholder="Duration"></td>
+                        <td><input type="number" class="form-control" min="1" value="{{ (int)$prescription->details['duration'] ?? 0 }}" name="duration[]" placeholder="Duration"></td>
                         <td>
                             <select class="form-control form-select" name="time_unit[]">
-                                <option @if($prescription->details['time_unit'] == 'days') selected @endif value="days">Days</option>
-                                <option @if($prescription->details['time_unit'] == 'weeks') selected @endif value="weeks">Weeks</option>
+                                <option @if($prescription->details['time_unit'] == 'days') selected @endif value="days">Day/s</option>
+                                <option @if($prescription->details['time_unit'] == 'weeks') selected @endif value="weeks">Week/s</option>
                             </select>
                         </td>
                         <td>
                             <select class="form-control form-select" name="daily_dosage[]">
                                 <option selected disabled>Select</option>
-                                <option @if($prescription->details['daily_dosage'] == '1 Time a Day') selected @endif value="1 Time a Day">1 Time a Day</option>
-                                <option @if($prescription->details['daily_dosage'] == '2 Times a Day') selected @endif value="2 Times a Day">2 Times a Day</option>
-                                <option @if($prescription->details['daily_dosage'] == '3 Times a Day') selected @endif value="3 Times a Day">3 Times a Day</option>
+                                <option @if($prescription->details['daily_dosage'] == '1') selected @endif value="1">1</option>
+                                <option @if($prescription->details['daily_dosage'] == '1 + 1') selected @endif value="1 + 1">1 + 1</option>
+                                <option @if($prescription->details['daily_dosage'] == '1 + 1 + 1') selected @endif value="1 + 1 + 1">1 + 1 + 1</option>
                             </select>
                         </td>
                         <td class="d-flex">
@@ -113,9 +113,9 @@
                 </td>
                 <td><select class="form-control form-select" name="daily_dosage[]">
                     <option selected disabled>Select</option>
-                    <option value="days">1 Time a Day</option>
-                    <option value="weeks">2 Times a Day</option>
-                    <option value="weeks">3 Times a Day</option>
+                    <option value="1">1</option>
+                    <option value="1 + 1">1 + 1</option>
+                    <option value="1 + 1 + 1">1 + 1 + 1</option>
                 </select></td>
                 <td>
                     <button type="button" class="btn btn-primary add-row me-2">+</button>

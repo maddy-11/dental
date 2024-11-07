@@ -17,8 +17,8 @@
     <a href="{{ route('designations.create') }}" class="btn btn-primary me-2">Add New</a>
     @endif
     </div>
-  <div class="table-responsive text-nowrap">
-    <table class="table datatable">
+  <div class="table-responsive text-nowrap p-5">
+    <table class="table table-striped datatable">
       <thead class="table-dark">
         <tr>
           <th>ID</th>

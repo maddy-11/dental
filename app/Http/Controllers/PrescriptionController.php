@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Examination;
 use App\Models\Prescription;
 use App\Models\PrescriptionMedicine;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -37,14 +38,6 @@ class PrescriptionController extends Controller
         return view('content.prescriptions.index', compact('prescriptions'));
     }
 
-
-    public function downloadPDF($id)
-    {
-        $appointment = Appointment::findOrFail($id);
-        $prescriptions = Prescription::where('appointment_id', $id)->get();
-        $pdf = PDF::loadView('content.prescriptions.prescriptionPdf', compact('prescriptions', 'appointment'));
-        return $pdf->download('prescription.pdf');
-    }
 
     public function create($id)
     {
@@ -80,41 +73,42 @@ class PrescriptionController extends Controller
     {
         $medicine = PrescriptionMedicine::all();
         $appointment = Appointment::findOrFail($id);
+        $examinations = Examination::where('appointment_id', $id)->get();
         $prescriptions = Prescription::where('appointment_id', $id)->get();
         $status = $request->status ? true : false;
-        return view('content.prescriptions.edit', compact('medicine', 'prescriptions', 'appointment', 'status'));
+        $qrCode = \QrCode::size(100)->format('svg')->generate(env('APP_URL', "http://localhost"));
+        return view('content.prescriptions.edit', compact('medicine', 'prescriptions', 'appointment', 'status', 'examinations', 'qrCode'));
     }
 
     public function update(Request $request)
     {
         $appointmentId = $request->input('appointment_id');
-        Prescription::where('appointment_id', $appointmentId)->delete();
         foreach ($request->medicine as $index => $medicineId) {
-            $details = [
-                'duration' => $request->duration[$index],
-                'time_unit' => $request->time_unit[$index],
-                'daily_dosage' => $request->daily_dosage[$index] ?? '',
-            ];
-            Prescription::create([
-                'appointment_id' => $appointmentId,
-                'medicine_id' => $medicineId,
-                'details' => json_encode($details),
-            ]);
+            $prescription = Prescription::where('appointment_id', $appointmentId)
+            ->where('medicine_id', $medicineId)
+            ->first();
+            if ($prescription) {
+                $details = [
+                    'duration' => $request->duration[$index],
+                    'time_unit' => $request->time_unit[$index],
+                    'daily_dosage' => $request->daily_dosage[$index] ?? null,
+                ];
+                $prescription->update([
+                    'details' => json_encode($details),
+                ]);
+            }
         }
-
-        // return redirect()->route('prescriptions.index')->with('success', 'Prescription created successfully.');
-        return back()->with('success', 'Prescription Updated successfully.');
+        return back()->with('success', 'Prescriptions updated successfully.');
     }
 
-    public function destroy()
-    {
-        dd('here');
-    }
     public function get_prescription($id)
     {
         $appointment = Appointment::findOrFail($id);
         $prescriptions = Prescription::where('appointment_id', $id)->get();
-        return view('content.prescriptions.prescription', compact('prescriptions', 'appointment'));
+        $examinations = Examination::where('appointment_id', $appointment->id)->get();
+        $qrCode = \QrCode::size(150)->format('svg')->generate(env('APP_URL', "http://localhost"));
+        $qrCodeImg = base64_encode($qrCode);
+        return view('content.prescriptions.prescription', compact('prescriptions', 'appointment', 'examinations', 'qrCodeImg'));
 
     }
 
@@ -122,12 +116,25 @@ class PrescriptionController extends Controller
     {
         $appointment = Appointment::where('patient_id', \Auth::id())->orderBy('created_at', 'desc')->first();
         $prescriptions = Prescription::where('appointment_id', $appointment->id)->get();
-        // $prescription = Prescription::whereHas('appointment', function($query) {
-        //     $query->where('patient_id', \Auth::id());
-        // })->orderBy('created_at', 'desc')->first();
+        $examinations = Examination::where('appointment_id', $appointment)->get();
+        return view('content.prescriptions.prescription', compact('prescriptions', 'appointment', 'examinations'));
+    }
 
+    public function downloadPDF($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $prescriptions = Prescription::where('appointment_id', $id)->get();
+        $examinations = Examination::where('appointment_id', $appointment->id)->get();
+        $qrCode = \QrCode::size(50)->generate(env('APP_URL', "http://localhost"));
+        $qrCodeImg = base64_encode($qrCode);
+        $pdf = PDF::loadView('content.prescriptions.prescriptionPdf', compact('prescriptions', 'appointment', 'examinations', 'qrCodeImg'));
+        return $pdf->download('prescription.pdf');
+    }
 
-        return view('content.prescriptions.prescription', compact('prescriptions', 'appointment'));
+    public function destroy($id)
+    {
+        Prescription::findOrFail($id)->delete();
+        return redirect()->route('prescription.index')->with('success', 'Prescription Deleted Successfully');
     }
 
 }

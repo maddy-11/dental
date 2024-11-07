@@ -132,7 +132,7 @@
       <table class="invoice">
         <tr class="header">
           <td>
-            <h3 style="font-family: 'Montserrat', sans-serif;">{{ $brandName }}</h3>
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path_image($verticalLogo))) }}" style="display: block; margin: auto; width: 150px; height: 150px; object-fit: contain;">
           </td>
           <td class="align-right">
             <h2 style="font-weight: 500; font-family: 'Montserrat', sans-serif;">Invoice</h2>

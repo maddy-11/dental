@@ -1,61 +1,100 @@
-    <div class="modal fade" id="prescriptionModal" tabindex="-1" aria-labelledby="prescriptionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header d-flex align-items-center justify-content-between">
-                    <h5 class="modal-title" id="prescriptionModalLabel" style="margin: auto;">Mansha's Dental Clinic</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <header>
-                        <p>{{ $address }}</p>
-                        <p>Phone: {{ $clinic_phone }}</p>
-                    </header>
-
-                    <div class="patient-info">
-                        <p><strong>Patient Name:</strong> {{ $appointment->name }}</p>
-                        <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</p>
-                    </div>
-
-                    <div class="prescription-details">
-                        <h2>Prescription</h2>
-                        <div class="table-responsive">
-                        <table class="medication-table table">
-                            <thead>
-                                <tr>
-                                    <th>Medication</th>
-                                    <th>Dosage</th>
-                                    <th>Duration</th>
-                                    <th>Frequency</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($prescriptions as $prescription)
-                                @php
-                                $prescription->details = json_decode($prescription->details, true);
-                                @endphp
-                                <tr>
-                                    <td>{{ $prescription->medicine->medicine }}</td>
-                                    <td>{{ $prescription->medicine->dosage }}</td>
-                                    <td>{{$prescription->details['duration'] }} {{ $prescription->details['time_unit']}}</td>
-                                    <td>{{$prescription->details['daily_dosage']}}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="downloadPdfButton" class="btn btn-primary">Save PDF</button>
-                </div>
-            </div>
+<div class="modal fade" id="prescriptionModal" tabindex="-1" aria-labelledby="prescriptionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <p class="text-center text-danger">Save First to View Changes</p>
+      <hr class="pt-0 mt-0">
+    <div class="d-flex align-items-center justify-content-between">
+        <header style="text-align: center; flex-grow: 1;">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path_image($horizontalLogo))) }}" style="display: block; margin: auto; width: 250px; object-fit: contain;">
+            <p style="width:70%; margin:auto">{!! $address !!}</p>
+            <p>Phone: {{$clinic_phone}}</p>
+        </header>
+        <div style="flex-shrink: 0;">
+            {{ $qrCode }}
         </div>
     </div>
 
-    <style>
-       {
+    <div class="modal-body">
+        <div class="patient-info">
+          {{-- <p><strong>Patient Name:</strong> {{ $appointment->name }}</p>
+          <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</p> --}}
+          <table class="patient-info table">
+            <thead>
+              <tr>
+                <th>Patient ID</th>
+                <th>Patient Name</th>
+                <th>Visit Date</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#{{ $appointment->patient->registration_id }}</td>
+            <td>{{ $appointment->name }}</td>
+            <td>{{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="prescription-details">
+  <table class="table">
+    <tr>
+      <td style="width: 66.6%; vertical-align: top; border:none!important;border-right: solid #dbd9d9 1px !important;">
+        <h2 class="mb-0">Rx Or Prescription</h2>
+        <div class="table-responsive">
+          <table class="medication-table table">
+            <thead>
+              <tr>
+                <th>Medication</th>
+                <th>Dosage</th>
+                <th>Duration</th>
+                <th>Frequency</th>
+            </tr>
+        </thead>
+        <tbody>
+          @foreach($prescriptions as $prescription)
+          @php
+          $prescription->details = json_decode($prescription->details, true);
+          @endphp
+          <tr>
+            <td>{{ $prescription->medicine->medicine }}</td>
+            <td>{{ $prescription->medicine->dosage }}</td>
+            <td>{{$prescription->details['duration'] }} {{ $prescription->details['time_unit']}}</td>
+            <td>{{$prescription->details['daily_dosage']}}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+</div>
+</td>
+<td style="width: 25%; vertical-align: top; border: none!important;">
+    <h2 class="mb-0">Procedures</h2>
+    <div class="table-responsive">
+      <table class="medication-table table">
+        <tbody>
+          @foreach($examinations as $examination)
+          <tr>
+            <td style="white-space: nowrap;">{{ $examination->service->name }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" id="downloadPdfButton" class="btn btn-primary">Save PDF</button>
+</div>
+</div>
+</div>
+</div>
+
+<style>
+    {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -163,21 +202,29 @@ header p {
     .modal-content {
         border: none;
         box-shadow: none;
-        width: 100%; /* Ensure it uses the full width */
-        height: auto; /* Allow auto height for content */
+        width: 100%;
+        /* Ensure it uses the full width */
+        height: auto;
+        /* Allow auto height for content */
     }
 
-    header, .patient-info, .prescription-details {
+    header,
+    .patient-info,
+    .prescription-details {
         page-break-inside: avoid;
     }
 
-    .medication-table th, .medication-table td {
+    .medication-table th,
+    .medication-table td {
         border: 1px solid #ddd;
         padding: 8px;
     }
 
-    .modal-footer, .btn-close {
-        display: none; /* Hide elements that are unnecessary for printing */
+    .modal-footer,
+    .btn-close {
+        display: none;
+        /* Hide elements that are unnecessary for printing */
     }
 }
+
 </style>

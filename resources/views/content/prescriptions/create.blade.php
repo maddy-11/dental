@@ -53,9 +53,9 @@
                         <td>
                             <select class="form-control form-select" name="daily_dosage[]">
                                 <option selected disabled>Select</option>
-                                <option value="days">1 Time a Day</option>
-                                <option value="weeks">2 Times a Day</option>
-                                <option value="weeks">3 Times a Day</option>
+                                <option value="1">1</option>
+                                <option value="1 + 1">1 + 1</option>
+                                <option value="1 + 1 + 1">1 + 1 + 1</option>
                             </select>
                         </td>
                         <td class="d-flex">
@@ -102,12 +102,11 @@
             </select>
             </td>
             <td><select class="form-control form-select" name="daily_dosage[]">
-            <option selected disabled>Select</option>
-            <option value="days">1 Time a Day</option>
-            <option value="weeks">2 Times a Day</option>
-            <option value="weeks">3 Times a Day</option>
-            </select></td>
-            <td>
+                    <option selected disabled>Select</option>
+                    <option value="1">1</option>
+                    <option value="1 + 1">1 + 1</option>
+                    <option value="1 + 1 + 1">1 + 1 + 1</option>
+                </select></td>
             <button type="button" class="btn btn-primary add-row me-2">+</button>
             <button type="button" class="btn btn-dark remove-row">-</button>
             </td>

@@ -57,7 +57,7 @@ th {
             <thead class="table-dark">
               <tr>
                 <th>Doctor</th>
-                <th>Pending Salary</th>
+                <th>Pending Payment</th>
                 <th>Paid Salary</th>
                 <th>Details</th>
                 <th>Pay Now</th>

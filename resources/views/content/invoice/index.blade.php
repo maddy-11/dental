@@ -125,7 +125,7 @@
                         '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                         '<i class="bx bx-dots-vertical-rounded"></i></button>' +
                         '<div class="dropdown-menu">' +
-                        '<a class="dropdown-item" href="{{ url('portal/payments/invoice') }}/' + payment.id + '"><i class="bx bx-edit-alt me-1"></i> View Invoice</a>' +
+                        '<a class="dropdown-item" href="{{ url('portal/payments/invoice') }}/' + payment.id + '"><i class="bx bx-receipt me-1"></i> View Invoice</a>' +
                         '<a class="dropdown-item" href="{{ url('portal/payments/delete') }}/' + payment.id + '"><i class="bx bx-trash me-1"></i> Delete</a>' +
                         '</div></div>'
                         ]).draw();

@@ -140,7 +140,7 @@
     <table class="invoice">
       <tr class="header">
         <td>
-          <h3>{{ $brandName }}</h3>
+          <img src="{{ public_path_image($verticalLogo) }}" style="display: block; margin: auto; width: 150px; height: 150px; object-fit: contain;">
         </td>
         <td class="align-right">
           <h2 style="font-weight:500">Invoice</h2>
@@ -203,9 +203,8 @@
       <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
         <div style="flex: 1;">
           <h5>Invoice From</h5>
-          <p>{{ $brandName }}<br>
-            {!! $address !!}
-          </p>
+          <h6>{{ $brandName }}</h6>
+          <p>{{ $address }}</p>
         </div>
         <div style="flex: 1; display: flex; justify-content: center;">
           <div>

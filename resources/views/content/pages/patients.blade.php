@@ -21,7 +21,7 @@
     <table class="table datatable">
       <thead class="table-dark">
         <tr>
-          <th>ID</th>
+          <th>Reg ID</th>
           <th>Name</th>
           <th>Username</th>
           <th>Phone</th>
@@ -33,7 +33,7 @@
       <tbody class="table-border-bottom-0">
         @foreach($patients as $user)
         <tr>
-          <td>{{ $loop->iteration }}</td>
+          <td> <span>#{{ $user->registration_id }}</span></td>
           <td> <span>{{ $user->name }}</span></td>
           <td> <span>{{ $user->username }}</span></td>
           <td> <span>{{ $user->phone }}</span></td>

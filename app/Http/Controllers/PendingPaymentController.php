@@ -136,12 +136,16 @@ private function parseDateRange($startDate, $endDate)
 
         $payments = $pendingQuery->get();
         $paid = $paidQuery->get();
+        $pendinPayments = $payments->sum('pending_salary');
+        $paidPayments = $paid->sum('paid_salary');
 
         $pending_html = view('content.pending_payments.partials.pending_salaries', compact('payments', 'user'))->render();
         $paid_html = view('content.pending_payments.partials.paid_salaries', compact('paid', 'user'))->render();
         return response()->json([
             'pending_html' => $pending_html,
-            'paid_html' => $paid_html
+            'paid_html' => $paid_html,
+            'total_pending'=>$pendinPayments,
+            'total_paid'=>$paidPayments,
         ]);
     }
 

@@ -10,44 +10,84 @@
     </div>
 </div>
 <div class="prescription-page">
-    <header>
-        <h1>{{ $brandName }}</h1>
-        <p>{!! $address !!}</p>
-        <p>Phone: {{$clinic_phone}}</p>
-    </header>
-
+    <div class="d-flex align-items-center justify-content-between">
+        <header style="text-align: center; flex-grow: 1;">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path_image($horizontalLogo))) }}" style="display: block; margin: auto; width: 250px; object-fit: contain;">
+            <p style="width:70%; margin:auto">{!! $address !!}</p>
+            <p>Phone: {{$clinic_phone}}</p>
+        </header>
+        <div style="flex-shrink: 0;">
+            <img src="data:image/svg+xml;base64,{{ $qrCodeImg }}" alt="QR Code" style="display: block; margin: auto; width: 100px; height: 100px; object-fit: contain;">
+        </div>
+    </div>
     <div class="patient-info">
-        <p><strong>Patient Name:</strong> {{ $appointment->name }}</p>
-        <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</p>
+        {{-- <p><strong>Patient Name:</strong> {{ $appointment->name }}</p>
+        <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</p> --}}
+        <table class="patient-info table">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Patient Name</th>
+                    <th>Visit Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#{{ $appointment->patient->registration_id }}</td>
+                    <td>{{ $appointment->name }}</td>
+                    <td>{{ \Carbon\Carbon::parse($appointment->start_date_time)->format('F j, Y') }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="prescription-details">
-        <h2>Prescription</h2>
-        <div class="table-responsive">
-            <table class="medication-table table">
-                <thead>
-                    <tr>
-                        <th>Medication</th>
-                        <th>Dosage</th>
-                        <th>Duration</th>
-                        <th>Frequency</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($prescriptions as $prescription)
-                    @php
-                    $prescription->details = json_decode($prescription->details, true);
-                    @endphp
-                    <tr>
-                        <td>{{ $prescription->medicine->medicine }}</td>
-                        <td>{{ $prescription->medicine->dosage }}</td>
-                        <td>{{$prescription->details['duration'] }} {{ $prescription->details['time_unit']}}</td>
-                        <td>{{$prescription->details['daily_dosage']}}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        <table class="table">
+            <tr>
+                <td style="width: 66.6%; vertical-align: top; border-right: solid #dbd9d9 1px !important;">
+                    <h2>Rx Or Prescription</h2>
+                    <div class="table-responsive">
+                        <table class="medication-table table">
+                            <thead>
+                                <tr>
+                                    <th>Medication</th>
+                                    <th>Dosage</th>
+                                    <th>Duration</th>
+                                    <th>Frequency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($prescriptions as $prescription)
+                                @php
+                                $prescription->details = json_decode($prescription->details, true);
+                                @endphp
+                                <tr>
+                                    <td>{{ $prescription->medicine->medicine }}</td>
+                                    <td>{{ $prescription->medicine->dosage }}</td>
+                                    <td>{{$prescription->details['duration'] }} {{ $prescription->details['time_unit']}}</td>
+                                    <td>{{$prescription->details['daily_dosage']}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="width: 25%; vertical-align: top;">
+                    <h2>Procedures</h2>
+                    <div class="table-responsive">
+                        <table class="medication-table table">
+                            <tbody>
+                                @foreach($examinations as $examination)
+                                <tr>
+                                    <td>{{ $examination->service->name }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <footer>
@@ -72,7 +112,6 @@ body {
 .prescription-page {
     width: 80%;
     margin:auto;
-    height: 100vh; /* Full height for printing */
     background: #fff;
     border-radius: 8px;
     padding: 25px;
@@ -101,7 +140,6 @@ header p {
 /* Patient Information Section */
 .patient-info {
     margin-top:100px;
-    border-bottom: 1px solid #eee;
     padding-bottom: 12px;
     margin-bottom: 20px;
 }
@@ -207,6 +245,7 @@ footer p {
 @endsection
 
 @push('page-scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script type="text/javascript">
     $('#downloadPdfButton').click(function() {
         Swal.fire({
@@ -234,13 +273,19 @@ footer p {
                 }, 100);
             },
             complete: function () {
-             Swal.close();
-         }
-     });
+               Swal.close();
+           }
+       });
     });
 
     function goBack() {
         window.history.back();
     }
+    var url = "{{ Request::root() }}";
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: url,
+        width: 128,
+        height: 128,
+    });
 </script>
 @endpush

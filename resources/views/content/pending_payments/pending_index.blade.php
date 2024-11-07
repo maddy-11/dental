@@ -66,7 +66,18 @@
       <a class="nav-link" id="profile-tab1" data-bs-toggle="tab" href="#paid-salary" role="tab" aria-controls="profile" aria-selected="false">Paid Payments</a>
     </li>
   </ul>
-
+{{-- <div class="container">
+  <div class="d-flex flex-column flex-md-row align-items-center gap-3 mt-2 mt-md-0">
+        <div class="row align-items-center container">
+            <label class="col-md-5 col-5 text-nowrap mb-1 mb-sm-0 me-sm-2">Total Pending</label>
+            <input class="col-md-5 col text-center justify-content-between p-2 bg-light border rounded" value="{{ $totalPendingSalary }}" readonly>
+        </div>
+        <div class="row align-items-center justify-content-between container">
+            <label class="col-md-5 col-5 text-nowrap mb-1 mb-sm-0 me-sm-2">Total Paid</label>
+            <input class="col-md-5 col text-center p-2 bg-light border rounded" value="{{ $total_paid }}" readonly>
+        </div>
+    </div>
+</div> --}}
   <div class="tab-content" id="tabContent1">
     <!-- Pending Salary Table -->
     <div class="tab-pane fade show active" id="pending_salary" role="tabpanel" aria-labelledby="home-tab1">
@@ -74,7 +85,7 @@
         <table class="table datatable" id="pendingSalaryTable">
           <thead class="table-dark">
             <tr>
-              <th>Pending Salary</th>
+              <th>Salary / Payments</th>
               <th>Month / Appointment Date</th>
               <th class="text-center">Actions</th>
             </tr>
@@ -231,7 +242,7 @@
     });
 
     
-    var start = moment().subtract(29, 'days');
+    var start = moment().startOf('month');
     var end = moment();
     fetchSalaries(start.format('MM/DD/YYYY'), end.format('MM/DD/YYYY'));
   });

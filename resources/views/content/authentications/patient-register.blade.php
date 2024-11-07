@@ -1,4 +1,4 @@
-@extends('layouts/blankLayout')
+@extends('layouts/contentNavbarLayout')
 
 @section('title', 'Add Patient')
 
@@ -12,15 +12,14 @@
   @section('content')
   <div class="container-xxl">
     <div class="authentication-wrapper authentication-basic container-p-y">
-      <div class="container col-md-10">
+      <div class="container">
         <!-- Register Card -->
         <div class="card px-sm-6 px-0">
           <div class="card-body">
             <!-- Logo -->
             <div class="app-brand justify-content-center mb-6">
               <a href="{{url('/')}}" class="app-brand-link gap-2">
-                <span class="app-brand-logo demo">@include('_partials.macros',["width"=>25,"withbg"=>'var(--bs-primary)'])</span>
-                <span class="app-brand-text demo text-heading fw-bold">{{config('variables.templateName')}}</span>
+                <span class="app-brand-text demo text-heading fw-bold">{{ $brandName }}</span>
               </a>
             </div>
             <!-- /Logo -->

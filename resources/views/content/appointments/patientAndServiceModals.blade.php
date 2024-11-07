@@ -35,7 +35,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalLabel">Register Patient</h5>
-                <button type="button" class="btn btn-light p-3" data-bs-dismiss="modal" aria-label="Close">x</button>
+                <button type="button" class="" data-bs-dismiss="modal" aria-label="Close">x</button>
             </div>
             <div class="modal-body">
                 <form id="patientForm">
@@ -49,12 +49,13 @@
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                        <small> Same will be used as Password</small>
                     </div>
 
                     <!-- Phone Field -->
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+                        <input type="tel" class="form-control" id="patient_phone" placeholder="Enter your phone number">
                     </div>
 
                     <!-- Doctor Select Field -->
@@ -83,7 +84,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalLabel">Register Patient</h5>
-                <button type="button" class="btn btn-light p-3" data-bs-dismiss="modal" aria-label="Close">x</button>
+                <button type="button" class="" data-bs-dismiss="modal" aria-label="Close">x</button>
             </div>
             <div class="modal-body">
                 <form id="serviceForm">
@@ -120,7 +121,7 @@
             const patientData = {
                 name: $('#patientName').val(),
                 username: $('#username').val(),
-                phone: $('#phone').val(),
+                phone: $('#patient_phone').val(),
                 doctor: $('.patientDoctor').val(),
                 _token: '{{ csrf_token() }}'
             };

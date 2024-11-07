@@ -15,6 +15,7 @@
   <link rel="canonical" href="{{ config('variables.productPage') ? config('variables.productPage') : '' }}">
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/fav.svg') }}" />
+
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -23,6 +24,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
   <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet"/>
   <!-- Include Styles -->
   @include('layouts/sections/styles')
@@ -31,7 +33,7 @@
   @include('layouts/sections/scriptsIncludes')
 </head>
 
-<body>
+<body style="font-family: 'Montserrat', sans-serif;">
 
   <!-- Layout Content -->
   @yield('layoutContent')
